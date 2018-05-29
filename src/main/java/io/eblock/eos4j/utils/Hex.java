@@ -3,7 +3,7 @@ package io.eblock.eos4j.utils;
 /**
  * Hex
  * 
- * @author espritblock  http://eblock.io
+ * @author espritblock http://eblock.io
  *
  */
 public class Hex {

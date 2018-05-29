@@ -1,6 +1,8 @@
 package io.eblock.eos4j;
 
 import io.eblock.eos4j.ecc.Ecc;
+import io.eblock.eos4j.ese.DataParam;
+import io.eblock.eos4j.ese.Ese;
 
 /**
  * EosClient
@@ -39,5 +41,15 @@ public class EosClient {
 	 */
 	public static String sign(String privateKey, String data) {
 		return Ecc.sign(privateKey, data);
+	}
+	
+	/**
+	 * parseData
+	 * 
+	 * @param data
+	 * @return
+	 */
+	public static String parseData(DataParam [] datas) {
+		return Ese.parseData(datas);
 	}
 }
