@@ -44,12 +44,26 @@ public class EosClient {
 	}
 	
 	/**
-	 * parseData
 	 * 
-	 * @param data
+	 * @param from
+	 * @param to
+	 * @param quantity
+	 * @param memo
 	 * @return
 	 */
-	public static String parseData(DataParam [] datas) {
-		return Ese.parseData(datas);
+	public static String parseTransferData(String from,String to,String quantity,String memo) {
+		return Ese.parseTransferData(from,to,quantity,memo);
+	}
+	
+	/**
+	 * 
+	 * @param creator
+	 * @param name
+	 * @param onwe
+	 * @param active
+	 * @return
+	 */
+	public static String parseAccountData(String creator,String name,String onwer,String active) {
+		return Ese.parseAccountData(creator,name,onwer,active);
 	}
 }

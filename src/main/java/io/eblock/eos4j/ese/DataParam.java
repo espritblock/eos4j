@@ -4,8 +4,10 @@ import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import io.eblock.eos4j.utils.Base58;
 import io.eblock.eos4j.utils.ByteUtils;
 import io.eblock.eos4j.utils.EException;
+import io.eblock.eos4j.utils.Ripemd160;
 
 /**
  * DataParam
@@ -56,6 +58,14 @@ public class DataParam {
 			return nameSeria();
 		} else if (this.type == DataType.asset) {
 			return assetSeria();
+		} else if (this.type == DataType.unit32) {
+			return unit32Seria();
+		}else if (this.type == DataType.unit16) {
+			return unit16Seria();
+		}else if(this.type == DataType.key) {
+			return keySeria();
+		}else if(this.type == DataType.varint32) {
+			return varint32();	
 		} else {
 			return stringSeria();
 		}
@@ -203,5 +213,71 @@ public class DataParam {
 		}
 		BigInteger ulName = new BigInteger(leHex.toString(), 16);
 		return ByteBuffer.allocate(Long.BYTES).order(ByteOrder.LITTLE_ENDIAN).putLong(ulName.longValue()).array();
+	}
+
+	/**
+	 * lengthSeria
+	 * 
+	 * @return
+	 */
+	private byte[] lengthSeria() {
+		long value = Long.parseLong(this.value);
+		byte[] a = new byte[] {};
+		value >>>= 0;
+		while (value >= 0x80) {
+			long b = (value & 0x7f) | 0x80;
+			a = ByteUtils.concat(a, new byte[] { (byte) b });
+			value >>>= 7;
+		}
+		return ByteUtils.concat(a, new byte[] { (byte) value });
+	}
+
+	private byte[] unit32Seria() {
+		return ByteBuffer.allocate(Integer.BYTES).order(ByteOrder.LITTLE_ENDIAN).putInt(Integer.parseInt(this.value))
+				.array();
+	}
+	
+	private byte[] unit16Seria() {
+		long value = Long.parseLong(this.value);
+		return new byte[] {
+			(byte)(value & 0x00FF),
+			(byte) ((value & 0xFF00) >>> 8)
+		};
+	}
+	
+	
+	private byte[] varint32() {
+		long value = Long.parseLong(this.value);
+		byte[] a = new byte[] {};
+		value >>>= 0;
+		while (value >= 0x80) {
+			long b = (value & 0x7f) | 0x80;
+			a = ByteUtils.concat(a, new byte[] { (byte) b });
+			value >>>= 7;
+		}
+		a = ByteUtils.concat(a, new byte[] { (byte) value });
+		return a;
+	}
+
+	/**
+	 * keySeria
+	 * 
+	 * @return
+	 */
+	private byte[] keySeria() {
+
+		this.value = this.value.replace("EOS", "");
+
+		byte[] b = Base58.decode(this.value);
+		
+		b = ByteBuffer.allocate(b.length).order(ByteOrder.BIG_ENDIAN).put(b).array();
+
+		byte[] checksum = ByteUtils.copy(b, b.length - 4, 4);
+
+		byte[] key = ByteUtils.copy(b, 0, b.length - 4);
+
+		byte[] rp = ByteUtils.copy(Ripemd160.from(key).bytes(), 0, 4);
+
+		return key;
 	}
 }
