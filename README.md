@@ -1,6 +1,6 @@
 # eos4j
 
-Eos for java
+eosio 1.0.1 for java
 
 # use
 
