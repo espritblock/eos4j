@@ -6,12 +6,13 @@ import java.util.Arrays;
 
 import io.eblock.eos4j.utils.ByteUtils;
 import io.eblock.eos4j.utils.EException;
+import io.eblock.eos4j.utils.Hex;
 import io.eblock.eos4j.utils.Sha;
 
 /**
  * Ecdsa
  * 
- * @author espritblock  http://eblock.io
+ * @author espritblock http://eblock.io
  *
  */
 public class Ecdsa {
@@ -74,7 +75,7 @@ public class Ecdsa {
 
 	private BigInteger deterministicGenerateK(Secp256k curve, String dataHash, BigInteger d, int nonce,
 			SignBigInt big) {
-		byte[] hash = Sha.hexStringToBytes(dataHash);
+		byte[] hash = Hex.hexStringToBytes(dataHash);
 		if (nonce > 0) {
 			hash = Sha.SHA256(ByteUtils.concat(hash, new byte[nonce]));
 		}
@@ -125,7 +126,7 @@ public class Ecdsa {
 		// Step H2b
 		v = Sha.HmacSHA256(v, k);
 
-		BigInteger T = new BigInteger(Sha.bytesToHexString(v), 16);
+		BigInteger T = new BigInteger(Hex.bytesToHexString(v), 16);
 
 		BigInteger e = new BigInteger(dataHash, 16);
 
@@ -167,7 +168,7 @@ public class Ecdsa {
 
 	/**
 	 * 
-	 * @author espritblock  http://eblock.io
+	 * @author espritblock http://eblock.io
 	 *
 	 */
 	public static class SignBigInt {

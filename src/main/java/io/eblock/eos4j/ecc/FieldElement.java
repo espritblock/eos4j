@@ -8,7 +8,7 @@ import io.eblock.eos4j.utils.EException;
 /**
  * FieldElement
  * 
- * @author espritblock  http://eblock.io
+ * @author espritblock http://eblock.io
  *
  */
 public class FieldElement {

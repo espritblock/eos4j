@@ -5,7 +5,7 @@ import java.math.BigInteger;
 /**
  * Curve
  * 
- * @author espritblock  http://eblock.io
+ * @author espritblock http://eblock.io
  *
  */
 public class Curve {

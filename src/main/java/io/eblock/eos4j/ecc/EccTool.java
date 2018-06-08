@@ -2,19 +2,23 @@ package io.eblock.eos4j.ecc;
 
 import java.math.BigInteger;
 
+import io.eblock.eos4j.api.vo.transaction.push.TxSign;
 import io.eblock.eos4j.utils.Base58;
+import io.eblock.eos4j.utils.ByteBuffer;
 import io.eblock.eos4j.utils.ByteUtils;
 import io.eblock.eos4j.utils.EException;
+import io.eblock.eos4j.utils.Hex;
+import io.eblock.eos4j.utils.ObjectUtils;
 import io.eblock.eos4j.utils.Ripemd160;
 import io.eblock.eos4j.utils.Sha;
 
 /**
  * Ecc
  * 
- * @author espritblock  http://eblock.io
+ * @author espritblock http://eblock.io
  *
  */
-public class Ecc {
+public class EccTool {
 
 	public static final String address_prefix = "EOS";
 
@@ -57,7 +61,7 @@ public class Ecc {
 		new_checksum = Sha.SHA256(new_checksum);
 		new_checksum = ByteUtils.copy(new_checksum, 0, 4);
 		byte[] last_private_key = ByteUtils.copy(private_key, 1, private_key.length - 1);
-		BigInteger d = new BigInteger(Sha.bytesToHexString(last_private_key), 16);
+		BigInteger d = new BigInteger(Hex.bytesToHexString(last_private_key), 16);
 		return d;
 	}
 
@@ -84,8 +88,8 @@ public class Ecc {
 		return bf.toString();
 	}
 
-	public static String sign(String pk, String data) {
-		String dataSha256 = Sha.bytesToHexString(Sha.SHA256(data));
+	public static String signHash(String pk, byte[] b) {
+		String dataSha256 = Hex.bytesToHexString(Sha.SHA256(b));
 		BigInteger e = new BigInteger(dataSha256, 16);
 		int nonce = 0;
 		int i = 0;
@@ -117,6 +121,57 @@ public class Ecc {
 		byte[] signatureString = ByteUtils.concat(pub_buf, ByteUtils.copy(checksum, 0, 4));
 
 		return "SIG_K1_" + Base58.encode(signatureString);
+	}
+
+	public static String sign(String pk, String data) {
+		String dataSha256 = Hex.bytesToHexString(Sha.SHA256(data));
+		BigInteger e = new BigInteger(dataSha256, 16);
+		int nonce = 0;
+		int i = 0;
+		BigInteger d = privateKey(pk);
+		Point Q = secp.G().multiply(d);
+		nonce = 0;
+		Ecdsa ecd = new Ecdsa(secp);
+		Ecdsa.SignBigInt sign;
+		while (true) {
+			sign = ecd.sign(dataSha256, d, nonce++);
+			byte der[] = sign.getDer();
+			byte lenR = der[3];
+			byte lenS = der[5 + lenR];
+			if (lenR == 32 && lenS == 32) {
+				i = ecd.calcPubKeyRecoveryParam(e, sign, Q);
+				i += 4; // compressed
+				i += 27; // compact // 24 or 27 :( forcing odd-y 2nd key candidate)
+				break;
+			}
+		}
+		byte[] pub_buf = new byte[65];
+		pub_buf[0] = (byte) i;
+		ByteUtils.copy(sign.getR().toByteArray(), 0, pub_buf, 1, sign.getR().toByteArray().length);
+		ByteUtils.copy(sign.getS().toByteArray(), 0, pub_buf, sign.getR().toByteArray().length + 1,
+				sign.getS().toByteArray().length);
+
+		byte[] checksum = Ripemd160.from(ByteUtils.concat(pub_buf, "K1".getBytes())).bytes();
+
+		byte[] signatureString = ByteUtils.concat(pub_buf, ByteUtils.copy(checksum, 0, 4));
+
+		return "SIG_K1_" + Base58.encode(signatureString);
+	}
+
+	public static String signTransaction(String privateKey, TxSign push) {
+		// tx
+		ByteBuffer bf = new ByteBuffer();
+		ObjectUtils.writeBytes(push, bf);
+		byte[] real = bf.getBuffer();
+		// append
+		real = ByteUtils.concat(real, java.nio.ByteBuffer.allocate(33).array());
+
+		// final byte [] b = real.clone();
+		// int[] a = IntStream.range(0, b.length).map(i -> b[i] & 0xff).toArray();
+		// for(int i=1;i<=a.length;i++) {
+		// System.out.print(a[i-1]+","+((i%8==0)?"\n":""));
+		// }
+		return signHash(privateKey, real);
 	}
 
 }
