@@ -19,10 +19,10 @@ public class Test {
 //		System.out.println("\n public key :" + pu);
 //
 //		String sign = Ecc.sign("5JF7uA3ERcSp8EjMvsnEWLdHVLR9oJsY7FVUj8qfHTnXZv7r98p",
-//				"is¾©–|ƒras¿´µ½¿É¿ÉÊÇÊÇÊÇ@#£¤%¡­¡­&*£¨CVBNM¡¶d ");
+//				"isäº¬æ±åƒ¹asçœ‹åˆ°å¯å¯æ˜¯æ˜¯æ˜¯@#ï¿¥%â€¦â€¦&*ï¼ˆCVBNMã€Šd ");
 //		System.out.println("\n sign :" + sign);
 //
-//		String data = Ecc.parseTransferData("fromaccount", "toaccount", "10.0020 SYS", "²âÊÔ123abcdo./,./!@##$%");
+//		String data = Ecc.parseTransferData("fromaccount", "toaccount", "10.0020 SYS", "æµ‹è¯•123abcdo./,./!@##$%");
 //		System.out.println("\n seriz data :" + data);
 //		System.out.println("\n transfer eq eosjs seriz " + data.equals(eosjs_transfer_seriz));
 //
@@ -48,7 +48,7 @@ public class Test {
 //		}
 //		try {
 //			Transaction tx = rpc.createAccount("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "eosio",
-//					"qqqsssdddeee", "EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx",
+//					"ooopppkkkddd", "EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx",
 //					"EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx", 8192l, "1.0000 SYS", "1.0000 SYS", 0l);
 //			System.out.println("transfer = " + tx.getTransactionId());
 //		} catch (Exception e) {

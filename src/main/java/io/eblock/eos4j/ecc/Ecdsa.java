@@ -24,7 +24,7 @@ public class Ecdsa {
 	}
 
 	/**
-	 * Ç©Ãû
+	 * sign
 	 * 
 	 * @param dataHash
 	 * @param d

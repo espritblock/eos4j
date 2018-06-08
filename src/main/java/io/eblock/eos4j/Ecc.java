@@ -5,7 +5,7 @@ import io.eblock.eos4j.ecc.EccTool;
 import io.eblock.eos4j.ese.Ese;
 
 /**
- * Ecc,ÓÃ»§Éú³É¹«Ë½Ô¿£¬Ç©Ãû£¬Êı¾İĞòÁĞ»¯
+ * Ecc,ç”¨æˆ·ç”Ÿæˆå…¬ç§é’¥ï¼Œç­¾åï¼Œæ•°æ®åºåˆ—åŒ–
  * 
  * @author espritblock http://eblock.io
  *
@@ -13,10 +13,10 @@ import io.eblock.eos4j.ese.Ese;
 public class Ecc {
 
 	/**
-	 * Í¨¹ıÖÖ×ÓÉú³ÉË½Ô¿
+	 * é€šè¿‡ç§å­ç”Ÿæˆç§é’¥
 	 * 
 	 * @param seed
-	 *            ÖÖ×Ó
+	 *            ç§å­
 	 * @return
 	 */
 	public static String seedPrivate(String seed) {
@@ -24,10 +24,10 @@ public class Ecc {
 	}
 
 	/**
-	 * Í¨¹ıË½Ô¿Éú³É¹«Ô¿
+	 * é€šè¿‡ç§é’¥ç”Ÿæˆå…¬é’¥
 	 * 
 	 * @param privateKey
-	 *            Ë½Ô¿
+	 *            ç§é’¥
 	 * @return
 	 */
 	public static String privateToPublic(String privateKey) {
@@ -35,12 +35,12 @@ public class Ecc {
 	}
 
 	/**
-	 * ÆÕÍ¨Êı¾İÇ©Ãû
+	 * æ™®é€šæ•°æ®ç­¾å
 	 * 
 	 * @param privateKey
-	 *            Ë½Ô¿
+	 *            ç§é’¥
 	 * @param data
-	 *            ĞèÒªÇ©ÃûµÄÊı¾İ
+	 *            éœ€è¦ç­¾åçš„æ•°æ®
 	 * @return
 	 */
 	public static String sign(String privateKey, String data) {
@@ -48,12 +48,12 @@ public class Ecc {
 	}
 
 	/**
-	 * ½»Ò×Ç©Ãû
+	 * äº¤æ˜“ç­¾å
 	 * 
 	 * @param privateKey
-	 *            Ë½Ô¿
+	 *            ç§é’¥
 	 * @param data
-	 *            ĞèÒªÇ©ÃûµÄ¶ÔÏó
+	 *            éœ€è¦ç­¾åçš„å¯¹è±¡
 	 * @return
 	 */
 	public static String signTransaction(String privateKey, TxSign sign) {
@@ -61,16 +61,16 @@ public class Ecc {
 	}
 
 	/**
-	 * ×ªÕËÊı¾İĞòÁĞ»¯
+	 * è½¬è´¦æ•°æ®åºåˆ—åŒ–
 	 * 
 	 * @param from
-	 *            ´Ó
+	 *            ä»
 	 * @param to
-	 *            µ½
+	 *            åˆ°
 	 * @param quantity
-	 *            ×ªÕË½ğ¶îºÍ±ÒÖÖ
+	 *            è½¬è´¦é‡‘é¢å’Œå¸ç§
 	 * @param memo
-	 *            ±¸×¢ÁôÑÔ
+	 *            å¤‡æ³¨ç•™è¨€
 	 * @return
 	 */
 	public static String parseTransferData(String from, String to, String quantity, String memo) {
@@ -78,16 +78,16 @@ public class Ecc {
 	}
 
 	/**
-	 * ´´½¨ÕË»§Êı¾İĞòÁĞ»¯
+	 * åˆ›å»ºè´¦æˆ·æ•°æ®åºåˆ—åŒ–
 	 * 
 	 * @param creator
-	 *            ´´½¨Õß
+	 *            åˆ›å»ºè€…
 	 * @param name
-	 *            ÕË»§Ãû
+	 *            è´¦æˆ·å
 	 * @param onwe
-	 *            onwer¹«Ô¿
+	 *            onwerå…¬é’¥
 	 * @param active
-	 *            active¹«Ô¿
+	 *            activeå…¬é’¥
 	 * @return
 	 */
 	public static String parseAccountData(String creator, String name, String onwer, String active) {
@@ -95,14 +95,14 @@ public class Ecc {
 	}
 
 	/**
-	 * ¹ºÂòramÊı¾İĞòÁĞ»¯
+	 * è´­ä¹°ramæ•°æ®åºåˆ—åŒ–
 	 * 
 	 * @param payer
-	 *            ¸¶¿îÕË»§
+	 *            ä»˜æ¬¾è´¦æˆ·
 	 * @param receiver
-	 *            ½ÓÊÕÕË»§
+	 *            æ¥æ”¶è´¦æˆ·
 	 * @param bytes
-	 *            ¹ºÂò×Ö½ÚÊıÁ¿
+	 *            è´­ä¹°å­—èŠ‚æ•°é‡
 	 * @return
 	 */
 	public static String parseBuyRamData(String payer, String receiver, Long bytes) {
@@ -110,18 +110,18 @@ public class Ecc {
 	}
 
 	/**
-	 * µÖÑºÊı¾İĞòÁĞ»¯
+	 * æŠµæŠ¼æ•°æ®åºåˆ—åŒ–
 	 * 
 	 * @param from
-	 *            µÖÑºÕË»§
+	 *            æŠµæŠ¼è´¦æˆ·
 	 * @param receiver
-	 *            ½ÓÊÜÕË»§
+	 *            æ¥å—è´¦æˆ·
 	 * @param stakeNetQuantity
-	 *            ÍøÂçµÖÑºÊıÁ¿ºÍ±ÒÖÖ
+	 *            ç½‘ç»œæŠµæŠ¼æ•°é‡å’Œå¸ç§
 	 * @param stakeCpuQuantity
-	 *            CPUµÖÑºÊıÁ¿ºÍ±ÒÖÖ
+	 *            CPUæŠµæŠ¼æ•°é‡å’Œå¸ç§
 	 * @param transfer
-	 *            ÊÇ·ñ½²µÖÑº×Ê²ú×ªËÍ¸ø¶Ô·½£¬0×Ô¼ºËùÓĞ£¬1¶Ô·½ËùÓĞ
+	 *            æ˜¯å¦è®²æŠµæŠ¼èµ„äº§è½¬é€ç»™å¯¹æ–¹ï¼Œ0è‡ªå·±æ‰€æœ‰ï¼Œ1å¯¹æ–¹æ‰€æœ‰
 	 * @return
 	 */
 	public static String parseBuyRamData(String from, String receiver, String stakeNetQuantity, String stakeCpuQuantity,

@@ -36,7 +36,7 @@ public class Rpc {
 	}
 
 	/**
-	 * »ñµÃÁ´ĞÅÏ¢
+	 * è·å¾—é“¾ä¿¡æ¯
 	 * 
 	 * @return
 	 */
@@ -45,10 +45,10 @@ public class Rpc {
 	}
 
 	/**
-	 * »ñµÃÇø¿éĞÅÏ¢
+	 * è·å¾—åŒºå—ä¿¡æ¯
 	 * 
 	 * @param blockNumberOrId
-	 *            Çø¿éID»òÕß¸ß¶È
+	 *            åŒºå—IDæˆ–è€…é«˜åº¦
 	 * @return
 	 */
 	public Block getBlock(String blockNumberOrId) {
@@ -56,10 +56,10 @@ public class Rpc {
 	}
 
 	/**
-	 * »ñµÃÕË»§ĞÅÏ¢
+	 * è·å¾—è´¦æˆ·ä¿¡æ¯
 	 * 
 	 * @param account
-	 *            ÕË»§Ãû³Æ
+	 *            è´¦æˆ·åç§°
 	 * @return
 	 */
 	public Account getAccount(String account) {
@@ -67,14 +67,14 @@ public class Rpc {
 	}
 
 	/**
-	 * ·¢ËÍÇëÇó
+	 * å‘é€è¯·æ±‚
 	 * 
 	 * @param compression
-	 *            Ñ¹Ëõ
+	 *            å‹ç¼©
 	 * @param pushTransaction
-	 *            ½»Ò×
+	 *            äº¤æ˜“
 	 * @param signatures
-	 *            Ç©Ãû
+	 *            ç­¾å
 	 * @return
 	 * @throws Exception
 	 */
@@ -88,20 +88,20 @@ public class Rpc {
 	}
 
 	/**
-	 * ×ªÕË
+	 * è½¬è´¦
 	 * 
 	 * @param pk
-	 *            Ë½Ô¿
+	 *            ç§é’¥
 	 * @param contractAccount
-	 *            ºÏÔ¼ÕË»§
+	 *            åˆçº¦è´¦æˆ·
 	 * @param from
-	 *            ´Ó
+	 *            ä»
 	 * @param to
-	 *            µ½
+	 *            åˆ°
 	 * @param quantity
-	 *            ±ÒÖÖ½ğ¶î
+	 *            å¸ç§é‡‘é¢
 	 * @param memo
-	 *            ÁôÑÔ
+	 *            ç•™è¨€
 	 * @return
 	 * @throws Exception
 	 */
@@ -143,26 +143,26 @@ public class Rpc {
 	}
 
 	/**
-	 * ´´½¨ÕË»§
+	 * åˆ›å»ºè´¦æˆ·
 	 * 
 	 * @param pk
-	 *            Ë½Ô¿
+	 *            ç§é’¥
 	 * @param creator
-	 *            ´´½¨Õß
+	 *            åˆ›å»ºè€…
 	 * @param newAccount
-	 *            ĞÂÕË»§
+	 *            æ–°è´¦æˆ·
 	 * @param owner
-	 *            ¹«Ô¿
+	 *            å…¬é’¥
 	 * @param active
-	 *            ¹«Ô¿
+	 *            å…¬é’¥
 	 * @param buyRam
-	 *            ¹ºÂò¿Õ¼äÊıÁ¿
+	 *            è´­ä¹°ç©ºé—´æ•°é‡
 	 * @param stakeNetQuantity
-	 *            ÍøÂçµÖÑº
+	 *            ç½‘ç»œæŠµæŠ¼
 	 * @param stakeCpuQuantity
-	 *            cpuµÖÑº
+	 *            cpuæŠµæŠ¼
 	 * @param transfer
-	 *            µÖÑº×Ê²úÊÇ·ñ×ªËÍ¸ø¶Ô·½£¬0×Ô¼ºËùÓĞ£¬1¶Ô·½ËùÓĞ
+	 *            æŠµæŠ¼èµ„äº§æ˜¯å¦è½¬é€ç»™å¯¹æ–¹ï¼Œ0è‡ªå·±æ‰€æœ‰ï¼Œ1å¯¹æ–¹æ‰€æœ‰
 	 * @return
 	 * @throws Exception
 	 */
