@@ -36,25 +36,33 @@ public class Test {
 
 		/// Rpc start
 
-//		Rpc rpc = new Rpc("http://54.238.242.48:8888");
+		Rpc rpc = new Rpc("http://112.74.202.161:8888");
 		//
 		// //ChainInfo
 		//
 //		try {
-//			Transaction tx = rpc.transfer("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "eosio.token", "eosio","eosio.token", "12.2821 SYS", "");
+//			Transaction tx = rpc.transfer("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "eosio.token", "eosio","espritblocke", "12.2821 SYS", "");
 //			System.out.println("transfer = " + tx.getTransactionId());
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
 //		try {
 //			Transaction tx = rpc.createAccount("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "eosio",
-//					"ooopppkkkddd", "EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx",
-//					"EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx", 8192l, "1.0000 SYS", "1.0000 SYS", 0l);
+//					"espritblock1", "EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx",
+//					"EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx", 8192l, "0.01 SYS", "0.01 SYS", 0l);
 //			System.out.println("transfer = " + tx.getTransactionId());
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
 
+//		try {
+//			Transaction tx = rpc.createAccount("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "eosio",
+//					"123455432111", "EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx",
+//					"EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx", 8192l);
+//			System.out.println("transfer = " + tx.getTransactionId());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		// System.out.println(Ese.parseDelegateData("eosio","mycontract11","1.0000
 		// SYS","1.0000 SYS",0));
 		// System.out.println("0000000000ea3055104246e6e6499197102700000000000004535953000000001027000000000000045359530000000000");

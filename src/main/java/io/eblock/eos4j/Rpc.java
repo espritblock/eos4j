@@ -156,6 +156,69 @@ public class Rpc {
 	 * @param active
 	 *            公钥
 	 * @param buyRam
+	 *            ram
+	 * @return
+	 * @throws Exception
+	 */
+	public Transaction createAccount(String pk, String creator, String newAccount, String owner, String active,
+			Long buyRam) throws Exception {
+		// get chain info
+		ChainInfo info = getChainInfo();
+		// get block info
+		Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
+		// tx
+		Tx tx = new Tx();
+		tx.setExpiration(info.getHeadBlockTime().getTime() / 1000 + 60);
+		tx.setRef_block_num(info.getLastIrreversibleBlockNum());
+		tx.setRef_block_prefix(block.getRefBlockPrefix());
+		tx.setNet_usage_words(0l);
+		tx.setMax_cpu_usage_ms(0l);
+		tx.setDelay_sec(0l);
+		// actions
+		List<TxAction> actions = new ArrayList<>();
+		tx.setActions(actions);
+		// create
+		Map<String, Object> createMap = new LinkedHashMap<>();
+		createMap.put("creator", creator);
+		createMap.put("name", newAccount);
+		createMap.put("owner", owner);
+		createMap.put("active", active);
+		TxAction createAction = new TxAction(creator, creator, "newaccount", createMap);
+		actions.add(createAction);
+		// buyrap
+		Map<String, Object> buyMap = new LinkedHashMap<>();
+		buyMap.put("payer", creator);
+		buyMap.put("receiver", newAccount);
+		buyMap.put("bytes", buyRam);
+		TxAction buyAction = new TxAction(creator, creator, "buyrambytes", buyMap);
+		actions.add(buyAction);
+		// sgin
+		String sign = Ecc.signTransaction(pk, new TxSign(info.getChainId(), tx));
+		// data parse
+		String accountData = Ese.parseAccountData(creator, newAccount, owner, active);
+		createAction.setData(accountData);
+		// data parse
+		String ramData = Ese.parseBuyRamData(creator, newAccount, buyRam);
+		buyAction.setData(ramData);
+		// reset expiration
+		tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
+		return pushTransaction("none", tx, new String[] { sign });
+	}
+
+	/**
+	 * 创建账户
+	 * 
+	 * @param pk
+	 *            私钥
+	 * @param creator
+	 *            创建者
+	 * @param newAccount
+	 *            新账户
+	 * @param owner
+	 *            公钥
+	 * @param active
+	 *            公钥
+	 * @param buyRam
 	 *            购买空间数量
 	 * @param stakeNetQuantity
 	 *            网络抵押

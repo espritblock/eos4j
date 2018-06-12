@@ -8,13 +8,13 @@ eosio 1.0.1 for java
 
 ```
 /**
- * ×ªÕË
+ * ×ªï¿½ï¿½
  * @param pk Ë½Ô¿
- * @param contractAccount ºÏÔ¼ÕË»§
- * @param from ´Ó
- * @param to µ½
- * @param quantity ±ÒÖÖ½ð¶î
- * @param memo ÁôÑÔ
+ * @param contractAccount ï¿½ï¿½Ô¼ï¿½Ë»ï¿½
+ * @param from ï¿½ï¿½
+ * @param to ï¿½ï¿½
+ * @param quantity ï¿½ï¿½ï¿½Ö½ï¿½ï¿½
+ * @param memo ï¿½ï¿½ï¿½ï¿½
  * @return
  * @throws Exception
  */
@@ -32,16 +32,16 @@ eosio 1.0.1 for java
 
 ```
 /**
- * ´´½¨ÕË»§
+ * ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½
  * @param pk Ë½Ô¿
- * @param creator ´´½¨Õß
- * @param newAccount ÐÂÕË»§
- * @param owner ¹«Ô¿
- * @param active ¹«Ô¿
- * @param buyRam ¹ºÂò¿Õ¼äÊýÁ¿
- * @param stakeNetQuantity ÍøÂçµÖÑº
- * @param stakeCpuQuantity cpuµÖÑº
- * @param transfer µÖÑº×Ê²úÊÇ·ñ×ªËÍ¸ø¶Ô·½£¬0×Ô¼ºËùÓÐ£¬1¶Ô·½ËùÓÐ
+ * @param creator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * @param newAccount ï¿½ï¿½ï¿½Ë»ï¿½
+ * @param owner ï¿½ï¿½Ô¿
+ * @param active ï¿½ï¿½Ô¿
+ * @param buyRam ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½
+ * @param stakeNetQuantity ï¿½ï¿½ï¿½ï¿½ï¿½Ñº
+ * @param stakeCpuQuantity cpuï¿½ï¿½Ñº
+ * @param transfer ï¿½ï¿½Ñºï¿½Ê²ï¿½ï¿½Ç·ï¿½×ªï¿½Í¸ï¿½ï¿½Ô·ï¿½ï¿½ï¿½0ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½Ð£ï¿½1ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½
  * @return
  * @throws Exception
  */
@@ -115,4 +115,4 @@ wechat hl_294944589
  
 # License
 
-eos4j is released under the Apache License 2.0.
+eos4j is released under GNU/GPL Version 3
