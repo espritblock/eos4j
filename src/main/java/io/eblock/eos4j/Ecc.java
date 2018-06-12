@@ -46,7 +46,7 @@ public class Ecc {
 	public static String sign(String privateKey, String data) {
 		return EccTool.sign(privateKey, data);
 	}
-
+	
 	/**
 	 * 交易签名
 	 * 

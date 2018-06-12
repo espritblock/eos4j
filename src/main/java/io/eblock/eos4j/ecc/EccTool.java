@@ -88,6 +88,12 @@ public class EccTool {
 		return bf.toString();
 	}
 
+	/**
+	 * signHash
+	 * @param pk
+	 * @param b
+	 * @return
+	 */
 	public static String signHash(String pk, byte[] b) {
 		String dataSha256 = Hex.bytesToHexString(Sha.SHA256(b));
 		BigInteger e = new BigInteger(dataSha256, 16);
@@ -123,6 +129,12 @@ public class EccTool {
 		return "SIG_K1_" + Base58.encode(signatureString);
 	}
 
+	/**
+	 * sign string
+	 * @param pk
+	 * @param data
+	 * @return
+	 */
 	public static String sign(String pk, String data) {
 		String dataSha256 = Hex.bytesToHexString(Sha.SHA256(data));
 		BigInteger e = new BigInteger(dataSha256, 16);
@@ -158,6 +170,12 @@ public class EccTool {
 		return "SIG_K1_" + Base58.encode(signatureString);
 	}
 
+	/**
+	 * signTransaction 
+	 * @param privateKey
+	 * @param push
+	 * @return
+	 */
 	public static String signTransaction(String privateKey, TxSign push) {
 		// tx
 		ByteBuffer bf = new ByteBuffer();
