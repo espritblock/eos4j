@@ -8,15 +8,13 @@ eosio 1.0.1 for java
 
 ```
 /**
- * ת��
- * @param pk ˽Կ
- * @param contractAccount ��Լ�˻�
- * @param from ��
- * @param to ��
- * @param quantity ���ֽ��
- * @param memo ����
- * @return
- * @throws Exception
+ * 转账
+ * @param pk 私钥
+ * @param contractAccount 合约账户
+ * @param from 从
+ * @param to 到
+ * @param quantity 转账币种金额
+ * @param memo 备注
  */
 
  rpc.transfer(
@@ -32,18 +30,16 @@ eosio 1.0.1 for java
 
 ```
 /**
- * �����˻�
- * @param pk ˽Կ
- * @param creator ������
- * @param newAccount ���˻�
- * @param owner ��Կ
- * @param active ��Կ
- * @param buyRam ����ռ�����
- * @param stakeNetQuantity �����Ѻ
- * @param stakeCpuQuantity cpu��Ѻ
- * @param transfer ��Ѻ�ʲ��Ƿ�ת�͸��Է���0�Լ����У�1�Է�����
- * @return
- * @throws Exception
+ * 创建账户
+ * @param pk 创建者私钥
+ * @param creator 创建者
+ * @param newAccount 新账户名
+ * @param owner 公钥
+ * @param active 公钥
+ * @param buyRam ram
+ * @param stakeNetQuantity 网络抵押
+ * @param stakeCpuQuantity CPU抵押
+ * @param transfer 抵押所有者，0自己，1对方
  */
  rpc.createAccount(
  	"5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", 
