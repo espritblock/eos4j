@@ -14,7 +14,10 @@ public class Test {
 		
 		
 		System.out.println("============= 通过种子生成私钥 ===============");
-		String pk = Ecc.seedPrivate("sdsdii612812#$%^&9dskskd<><><SAIOsjkJBVHGUPOO{{PW");
+		String pk = Ecc.seedPrivate("!@#$%^&*(lajdlkjaksjdlkjaskldM<>?87126162kajsdjlaksd kajdlkaslkd heiuheijpe f[a- si0ausd9asd ahsdvcyasdcasdc ajhsdg8ca"
+				+ "we asds JHDKAHDKKASDKJALSKDKA ooidjajsdua09sid0asdo[paksdajsdlklasdmlk FJKLIKNLK;B/;LP[P'NC;PO'; OOPO;L0["
+				+ "XP'C'[FG["
+				+ "19218728909107328972309289832098012");
 		System.out.println("private key :" + pk +"\n");
 
 		System.out.println("============= 通过私钥生成公钥 ===============");
@@ -46,7 +49,7 @@ public class Test {
 		
 		System.out.println("============= 转账 ===============");
 		try {
-			Transaction t1 = rpc.transfer("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3","eosio.token", "eosio","espritblocke", "12.2821 SYS", "");
+			Transaction t1 = rpc.transfer("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3","espritblocke", "inita","initb", "12.2821 MSP", "");
 			System.out.println("转账成功 = " + t1.getTransactionId()+" \n ");
 		}catch(Exception ex) {
 			ex.printStackTrace();

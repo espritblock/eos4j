@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.eblock.eos4j.api.service.RpcService;
 import io.eblock.eos4j.api.utils.Generator;
 import io.eblock.eos4j.api.vo.Block;
@@ -79,10 +81,10 @@ public class Rpc {
 	 * @throws Exception
 	 */
 	public Transaction pushTransaction(String compression, Tx pushTransaction, String[] signatures) throws Exception {
-		// ObjectMapper mapper = new ObjectMapper();
-		// String mapJakcson = mapper.writeValueAsString(new TxRequest(compression,
-		// pushTransaction, signatures));
-		// System.out.println(mapJakcson);
+		 ObjectMapper mapper = new ObjectMapper();
+		 String mapJakcson = mapper.writeValueAsString(new TxRequest(compression,
+		 pushTransaction, signatures));
+		 System.out.println(mapJakcson);
 		return Generator
 				.executeSync(rpcService.pushTransaction(new TxRequest(compression, pushTransaction, signatures)));
 	}
@@ -183,14 +185,14 @@ public class Rpc {
 		createMap.put("name", newAccount);
 		createMap.put("owner", owner);
 		createMap.put("active", active);
-		TxAction createAction = new TxAction(creator, creator, "newaccount", createMap);
+		TxAction createAction = new TxAction(creator, "eosio", "newaccount", createMap);
 		actions.add(createAction);
 		// buyrap
 		Map<String, Object> buyMap = new LinkedHashMap<>();
 		buyMap.put("payer", creator);
 		buyMap.put("receiver", newAccount);
 		buyMap.put("bytes", buyRam);
-		TxAction buyAction = new TxAction(creator, creator, "buyrambytes", buyMap);
+		TxAction buyAction = new TxAction(creator, "eosio", "buyrambytes", buyMap);
 		actions.add(buyAction);
 		// sgin
 		String sign = Ecc.signTransaction(pk, new TxSign(info.getChainId(), tx));
@@ -256,14 +258,14 @@ public class Rpc {
 		createMap.put("name", newAccount);
 		createMap.put("owner", owner);
 		createMap.put("active", active);
-		TxAction createAction = new TxAction(creator, creator, "newaccount", createMap);
+		TxAction createAction = new TxAction(creator, "eosio", "newaccount", createMap);
 		actions.add(createAction);
 		// buyrap
 		Map<String, Object> buyMap = new LinkedHashMap<>();
 		buyMap.put("payer", creator);
 		buyMap.put("receiver", newAccount);
 		buyMap.put("bytes", buyRam);
-		TxAction buyAction = new TxAction(creator, creator, "buyrambytes", buyMap);
+		TxAction buyAction = new TxAction(creator, "eosio", "buyrambytes", buyMap);
 		actions.add(buyAction);
 		// buyrap
 		Map<String, Object> delMap = new LinkedHashMap<>();
@@ -272,7 +274,7 @@ public class Rpc {
 		delMap.put("stake_net_quantity", new DataParam(stakeNetQuantity, DataType.asset, Action.delegate).getValue());
 		delMap.put("stake_cpu_quantity", new DataParam(stakeCpuQuantity, DataType.asset, Action.delegate).getValue());
 		delMap.put("transfer", transfer);
-		TxAction delAction = new TxAction(creator, creator, "delegatebw", delMap);
+		TxAction delAction = new TxAction(creator, "eosio", "delegatebw", delMap);
 		actions.add(delAction);
 		// // sgin
 		String sign = Ecc.signTransaction(pk, new TxSign(info.getChainId(), tx));
