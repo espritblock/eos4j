@@ -2,6 +2,8 @@
 
 eosio 1.0.1 for java 
 
+change writeName add writeUint64 support custom contract
+
 # use
 
 ## transfer

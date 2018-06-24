@@ -181,7 +181,7 @@ public class ByteUtils {
 			pad = Integer.parseInt(precision) - part[1].length();
 			bf.append(part[1]);
 		}
-		// ¾«¶È²¹0
+		// ï¿½ï¿½ï¿½È²ï¿½0
 		for (int i = 0; i < pad; i++) {
 			bf.append("0");
 		}
@@ -208,7 +208,7 @@ public class ByteUtils {
 	 * @param v
 	 * @return
 	 */
-	public static byte[] writeUint64(String v) {
+	public static byte[] writeName(String v) {
 		StringBuffer bitstr = new StringBuffer();
 		for (int i = 0; i <= 12; i++) {
 			int c = i < v.length() ? ByteUtils.charidx(v.charAt(i)) : 0;
@@ -337,6 +337,10 @@ public class ByteUtils {
 		bf.concat(writerVarint32("0"));
 		bf.concat(writerVarint32("0"));
 		return bf.getBuffer();
+	}
+	
+	public static byte[] writeUint64(String v) {
+		return ByteBuffer.allocate(Long.BYTES).order(ByteOrder.LITTLE_ENDIAN).putLong(Long.parseLong(v)).array();
 	}
 
 }

@@ -49,7 +49,7 @@ public class DataParam {
 
 	public byte[] seria() {
 		if (this.type == DataType.name) {
-			return ByteUtils.writeUint64(this.value);
+			return ByteUtils.writeName(this.value);
 		} else if (this.type == DataType.asset) {
 			return ByteUtils.writerAsset(this.value);
 		} else if (this.type == DataType.unit32) {
@@ -60,6 +60,8 @@ public class DataParam {
 			return ByteUtils.writerKey(this.value);
 		} else if (this.type == DataType.varint32) {
 			return ByteUtils.writerVarint32(this.value);
+		} else if (this.type == DataType.unit64) {
+			return ByteUtils.writeUint64(this.value);
 		} else {
 			return ByteUtils.writerString(this.value);
 		}

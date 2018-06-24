@@ -82,31 +82,31 @@ public class ObjectUtils {
 				} else if ("delay_sec".equals(key)) {
 					bf.concat(ByteUtils.writerVarint32(obj.toString()));
 				} else if ("account".equals(key)) {
-					bf.concat(ByteUtils.writeUint64(obj.toString()));
+					bf.concat(ByteUtils.writeName(obj.toString()));
 				} else if ("name".equals(key)) {
-					bf.concat(ByteUtils.writeUint64(obj.toString()));
+					bf.concat(ByteUtils.writeName(obj.toString()));
 				} else if ("actor".equals(key)) {
-					bf.concat(ByteUtils.writeUint64(obj.toString()));
+					bf.concat(ByteUtils.writeName(obj.toString()));
 				} else if ("permission".equals(key)) {
-					bf.concat(ByteUtils.writeUint64(obj.toString()));
+					bf.concat(ByteUtils.writeName(obj.toString()));
 				} else if ("from".equals(key)) {
-					bf.concat(ByteUtils.writeUint64(obj.toString()));
+					bf.concat(ByteUtils.writeName(obj.toString()));
 				} else if ("to".equals(key)) {
-					bf.concat(ByteUtils.writeUint64(obj.toString()));
+					bf.concat(ByteUtils.writeName(obj.toString()));
 				} else if ("quantity".equals(key)) {
 					bf.concat(ByteUtils.writerAsset(obj.toString()));
 				} else if ("memo".equals(key)) {
 					bf.concat(ByteUtils.writerString(obj.toString()));
 				} else if ("creator".equals(key)) {
-					bf.concat(ByteUtils.writeUint64(obj.toString()));
+					bf.concat(ByteUtils.writeName(obj.toString()));
 				} else if ("owner".equals(key)) {
 					bf.concat(ByteUtils.writerKey(obj.toString()));
 				} else if ("active".equals(key)) {
 					bf.concat(ByteUtils.writerKey(obj.toString()));
 				} else if ("payer".equals(key)) {
-					bf.concat(ByteUtils.writeUint64(obj.toString()));
+					bf.concat(ByteUtils.writeName(obj.toString()));
 				} else if ("receiver".equals(key)) {
-					bf.concat(ByteUtils.writeUint64(obj.toString()));
+					bf.concat(ByteUtils.writeName(obj.toString()));
 				} else if ("bytes".equals(key)) {
 					bf.concat(ByteUtils.writerUnit32(obj.toString()));
 				} else if ("stake_net_quantity".equals(key)) {
