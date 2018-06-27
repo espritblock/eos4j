@@ -1,9 +1,12 @@
 package io.eblock.eos4j.api.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.eblock.eos4j.api.vo.transaction.Transaction;
+import io.eblock.eos4j.api.vo.transaction.receive.BlockTxs;
 
 /**
  * 
@@ -43,9 +46,9 @@ public class Block {
 	@JsonProperty("ref_block_prefix")
 	private Long refBlockPrefix;
 
-	public Block() {
+	@JsonProperty("transactions")
+	private List<BlockTxs> transactions;
 
-	}
 
 	public Date getTimestamp() {
 		return timestamp;
@@ -127,4 +130,12 @@ public class Block {
 		this.refBlockPrefix = refBlockPrefix;
 	}
 
+
+	public List<BlockTxs> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<BlockTxs> transactions) {
+		this.transactions = transactions;
+	}
 }
