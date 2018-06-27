@@ -24,12 +24,15 @@ public class RpcTest {
 
     @Test
     public void getBlock() {
+//
+        println(rpc.getRpcService().getBlockAll(Collections.singletonMap("block_num_or_id", "20000")));
+//
 
-        println(rpc.getRpcService().getBlockAll(Collections.singletonMap("block_num_or_id", "2265494")));
+        for (int i = 2700000; i < 2705383; i++) {
+            println(rpc.getBlock(i+""));
+        }
 
 
-
-        println(rpc.getBlock(2265494+""));
 
     }
 

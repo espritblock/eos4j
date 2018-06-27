@@ -58,6 +58,11 @@ public class Rpc {
         return Generator.executeSync(rpcService.getBlock(Collections.singletonMap("block_num_or_id", blockNumberOrId)));
     }
 
+    public Object getBlockAll(String blockNumberOrId) {
+        return Generator.executeSync(rpcService.getBlockAll(Collections.singletonMap("block_num_or_id", blockNumberOrId)));
+    }
+
+
     /**
      * 获得账户信息
      *
