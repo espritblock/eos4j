@@ -108,10 +108,14 @@ public class ObjectUtils {
 				} else if ("receiver".equals(key)) {
 					bf.concat(ByteUtils.writeName(obj.toString()));
 				} else if ("bytes".equals(key)) {
-					bf.concat(ByteUtils.writerUnit32(obj.toString()));
+					bf.concat(ByteUtils.writeUint64(obj.toString()));
 				} else if ("stake_net_quantity".equals(key)) {
 					bf.concat(ByteUtils.writerAsset(obj.toString()));
 				} else if ("stake_cpu_quantity".equals(key)) {
+					bf.concat(ByteUtils.writerAsset(obj.toString()));
+				} else if ("unstake_net_quantity".equals(key)) {
+					bf.concat(ByteUtils.writerAsset(obj.toString()));
+				} else if ("unstake_cpu_quantity".equals(key)) {
 					bf.concat(ByteUtils.writerAsset(obj.toString()));
 				} else if ("transfer".equals(key)) {
 					bf.concat(ByteUtils.writerUnit8(obj.toString()));

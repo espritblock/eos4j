@@ -35,7 +35,7 @@ public class Ese {
 	}
 
 	/**
-	 * parseTransferData
+	 * parseAccountData
 	 * 
 	 * @param datas
 	 * @return
@@ -61,7 +61,7 @@ public class Ese {
 	}
 
 	/**
-	 * parseBuyRamData
+	 * parseDelegateData
 	 * 
 	 * @param datas
 	 * @return
@@ -84,7 +84,26 @@ public class Ese {
 	}
 
 	/**
-	 * parseTransferData
+	 * parseUnDelegateData
+	 *
+	 * @param datas
+	 * @return
+	 */
+	public static String parseUnDelegateData(String from, String receiver, String unstakeNetQuantity, String unstakeCpuQuantity) {
+		DataParam[] datas = new DataParam[] { new DataParam(from, DataType.name, Action.delegate),
+				new DataParam(receiver, DataType.name, Action.delegate),
+				new DataParam(unstakeNetQuantity, DataType.asset, Action.delegate),
+				new DataParam(unstakeCpuQuantity, DataType.asset, Action.delegate)
+		};
+		byte[] allbyte = new byte[] {};
+		for (DataParam value : datas) {
+			allbyte = ByteUtils.concat(allbyte, value.seria());
+		}
+		return Hex.bytesToHexString(allbyte);
+	}
+
+	/**
+	 * parseBuyRamData
 	 * 
 	 * @param datas
 	 * @return
@@ -93,8 +112,24 @@ public class Ese {
 
 		DataParam[] datas = new DataParam[] { new DataParam(payer, DataType.name, Action.ram),
 				new DataParam(receiver, DataType.name, Action.ram),
-				new DataParam(String.valueOf(bytes), DataType.unit32, Action.ram)
+				new DataParam(String.valueOf(bytes), DataType.unit64, Action.ram)
+		};
+		byte[] allbyte = new byte[] {};
+		for (DataParam value : datas) {
+			allbyte = ByteUtils.concat(allbyte, value.seria());
+		}
+		return Hex.bytesToHexString(allbyte);
+	}
 
+	/**
+	 * parseSellRamData
+	 *
+	 * @param datas
+	 * @return
+	 */
+	public static String parseSellRamData(String account, Long bytes) {
+		DataParam[] datas = new DataParam[] { new DataParam(account, DataType.name, Action.ram),
+				new DataParam(String.valueOf(bytes), DataType.unit64, Action.ram)
 		};
 		byte[] allbyte = new byte[] {};
 		for (DataParam value : datas) {

@@ -267,7 +267,7 @@ public class Rpc {
 		buyMap.put("bytes", buyRam);
 		TxAction buyAction = new TxAction(creator, "eosio", "buyrambytes", buyMap);
 		actions.add(buyAction);
-		// buyrap
+		// delegatebw
 		Map<String, Object> delMap = new LinkedHashMap<>();
 		delMap.put("from", creator);
 		delMap.put("receiver", newAccount);
@@ -288,6 +288,161 @@ public class Rpc {
 		String delData = Ese.parseDelegateData(creator, newAccount, stakeNetQuantity, stakeCpuQuantity,
 				transfer.intValue());
 		delAction.setData(delData);
+		// reset expiration
+		tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
+		return pushTransaction("none", tx, new String[] { sign });
+	}
+
+    //购买ram
+	public Transaction buyRam(String pk, String account, Long buyRam) throws Exception {
+		// get chain info
+		ChainInfo info = getChainInfo();
+		// get block info
+		Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
+		// tx
+		Tx tx = new Tx();
+		tx.setExpiration(info.getHeadBlockTime().getTime() / 1000 + 60);
+		tx.setRef_block_num(info.getLastIrreversibleBlockNum());
+		tx.setRef_block_prefix(block.getRefBlockPrefix());
+		tx.setNet_usage_words(0l);
+		tx.setMax_cpu_usage_ms(0l);
+		tx.setDelay_sec(0l);
+		// actions
+		List<TxAction> actions = new ArrayList<>();
+		tx.setActions(actions);
+		// buyram
+		Map<String, Object> buyMap = new LinkedHashMap<>();
+		buyMap.put("payer", account);
+		buyMap.put("receiver", account);
+		buyMap.put("bytes", buyRam);
+		TxAction buyAction = new TxAction(account, "eosio", "buyrambytes", buyMap);
+		actions.add(buyAction);
+
+	    // sign
+		String sign = Ecc.signTransaction(pk, new TxSign(info.getChainId(), tx));
+
+		// data parse
+		String ramData = Ese.parseBuyRamData(account, account, buyRam);
+		buyAction.setData(ramData);
+		System.out.println("buy ramData: " + ramData + "\n");
+
+		// reset expiration
+		tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
+		return pushTransaction("none", tx, new String[] { sign });
+	}
+
+	//出售ram
+	public Transaction sellRam(String pk, String account, Long sellRam) throws Exception {
+		// get chain info
+		ChainInfo info = getChainInfo();
+		// get block info
+		Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
+
+		// tx
+		Tx tx = new Tx();
+		tx.setExpiration(info.getHeadBlockTime().getTime() / 1000 + 60);
+		tx.setRef_block_num(info.getLastIrreversibleBlockNum());
+		tx.setRef_block_prefix(block.getRefBlockPrefix());
+		tx.setNet_usage_words(0l);
+		tx.setMax_cpu_usage_ms(0l);
+		tx.setDelay_sec(0l);
+
+		// actions
+		List<TxAction> actions = new ArrayList<>();
+		tx.setActions(actions);
+
+		// sellRam
+		Map<String, Object> sellMap = new LinkedHashMap<>();
+		sellMap.put("account", account);
+		sellMap.put("bytes", sellRam);
+		TxAction sellAction = new TxAction(account, "eosio", "sellram", sellMap);
+		actions.add(sellAction);
+
+		// sign
+		String sign = Ecc.signTransaction(pk, new TxSign(info.getChainId(), tx));
+
+		// data parse
+		String ramData = Ese.parseSellRamData(account, sellRam);
+		sellAction.setData(ramData);
+		System.out.println("sell ramData: " + ramData + "\n");
+
+		// reset expiration
+		tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
+		return pushTransaction("none", tx, new String[] { sign });
+	}
+
+    //兑换cpu和net
+    public Transaction delegate(String pk, String account, String stakeNetQuantity, String stakeCpuQuantity, Long transfer) throws Exception {
+        // get chain info
+        ChainInfo info = getChainInfo();
+        // get block info
+        Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
+        // tx
+        Tx tx = new Tx();
+        tx.setExpiration(info.getHeadBlockTime().getTime() / 1000 + 60);
+        tx.setRef_block_num(info.getLastIrreversibleBlockNum());
+        tx.setRef_block_prefix(block.getRefBlockPrefix());
+        tx.setNet_usage_words(0l);
+        tx.setMax_cpu_usage_ms(0l);
+        tx.setDelay_sec(0l);
+        // actions
+        List<TxAction> actions = new ArrayList<>();
+        tx.setActions(actions);
+        // delegate
+        Map<String, Object> delMap = new LinkedHashMap<>();
+        delMap.put("from", account);
+        delMap.put("receiver", account);
+        delMap.put("stake_net_quantity", new DataParam(stakeNetQuantity, DataType.asset, Action.delegate).getValue());
+        delMap.put("stake_cpu_quantity", new DataParam(stakeCpuQuantity, DataType.asset, Action.delegate).getValue());
+        delMap.put("transfer", transfer);
+        TxAction delAction = new TxAction(account, "eosio", "delegatebw", delMap);
+        actions.add(delAction);
+        // sign
+        String sign = Ecc.signTransaction(pk, new TxSign(info.getChainId(), tx));
+        // data parse
+        String delData = Ese.parseDelegateData(account, account, stakeNetQuantity, stakeCpuQuantity,
+                                                transfer.intValue());
+        delAction.setData(delData);
+        // reset expiration
+        tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
+        return pushTransaction("none", tx, new String[] { sign });
+    }
+
+	//赎回cpu和net
+	public Transaction undelegate(String pk, String account, String unstakeNetQuantity, String unstakeCpuQuantity) throws Exception {
+		// get chain info
+		ChainInfo info = getChainInfo();
+		// get block info
+		Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
+
+		// tx
+		Tx tx = new Tx();
+		tx.setExpiration(info.getHeadBlockTime().getTime() / 1000 + 60);
+		tx.setRef_block_num(info.getLastIrreversibleBlockNum());
+		tx.setRef_block_prefix(block.getRefBlockPrefix());
+		tx.setNet_usage_words(0l);
+		tx.setMax_cpu_usage_ms(0l);
+		tx.setDelay_sec(0l);
+
+		// actions
+		List<TxAction> actions = new ArrayList<>();
+		tx.setActions(actions);
+
+		// delegatebw
+		Map<String, Object> delMap = new LinkedHashMap<>();
+		delMap.put("from", account);
+		delMap.put("receiver", account);
+		delMap.put("unstake_net_quantity", new DataParam(unstakeNetQuantity, DataType.asset, Action.delegate).getValue());
+		delMap.put("unstake_cpu_quantity", new DataParam(unstakeCpuQuantity, DataType.asset, Action.delegate).getValue());
+		TxAction delAction = new TxAction(account, "eosio", "undelegatebw", delMap);
+		actions.add(delAction);
+		 // sign
+		String sign = Ecc.signTransaction(pk, new TxSign(info.getChainId(), tx));
+
+		// data parse
+		String delData = Ese.parseUnDelegateData(account, account, unstakeNetQuantity, unstakeCpuQuantity);
+		delAction.setData(delData);
+
 		// reset expiration
 		tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
 		return pushTransaction("none", tx, new String[] { sign });
