@@ -102,10 +102,25 @@ public class Ese {
 		return Hex.bytesToHexString(allbyte);
 	}
 
+    /**
+     * parseRefundData
+     *
+     * @param account
+     * @return
+     */
+    public static String parseRefundData(String account) {
+        DataParam[] datas = new DataParam[] { new DataParam(account, DataType.name, Action.account)};
+        byte[] allbyte = new byte[] {};
+        for (DataParam value : datas) {
+            allbyte = ByteUtils.concat(allbyte, value.seria());
+        }
+        return Hex.bytesToHexString(allbyte);
+    }
+
 	/**
 	 * parseBuyRamData
 	 * 
-	 * @param datas
+	 * @param payer
 	 * @return
 	 */
 	public static String parseBuyRamData(String payer, String receiver, Long bytes) {

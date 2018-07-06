@@ -8,13 +8,21 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.math.BigDecimal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.eblock.eos4j.api.service.RpcService;
 import io.eblock.eos4j.api.utils.Generator;
 import io.eblock.eos4j.api.vo.Block;
+import io.eblock.eos4j.api.vo.tablerows.Base;
+import io.eblock.eos4j.api.vo.tablerows.Quote;
+import io.eblock.eos4j.api.vo.tablerows.RamMarketTable;
+import io.eblock.eos4j.api.vo.tablerows.RamMarketRows;
+import io.eblock.eos4j.api.vo.tablerows.GlobalTable;
+import io.eblock.eos4j.api.vo.tablerows.GlobalRows;
 import io.eblock.eos4j.api.vo.ChainInfo;
+import io.eblock.eos4j.api.vo.RamUsage;
 import io.eblock.eos4j.api.vo.account.Account;
 import io.eblock.eos4j.api.vo.transaction.Transaction;
 import io.eblock.eos4j.api.vo.transaction.push.Tx;
@@ -56,6 +64,103 @@ public class Rpc {
 	public Block getBlock(String blockNumberOrId) {
 		return Generator.executeSync(rpcService.getBlock(Collections.singletonMap("block_num_or_id", blockNumberOrId)));
 	}
+
+	/**
+	 * 获得Table Rows
+	 *
+	 * @param scope
+	 * @param code
+	 * @param table
+	 *
+	 * @return
+	 */
+	public RamMarketTable getRamMarketTableRows(String scope, String code, String table, String json) {
+		HashMap<String,String> map = new HashMap();
+		map.put("scope", scope);
+		map.put("code", code);
+		map.put("table", table);
+        map.put("json", json);
+		return Generator.executeSync(rpcService.getRamMarketTableRows(map));
+	}
+
+	/**
+	 * 获得Table Rows
+	 *
+	 * @param scope
+	 * @param code
+	 * @param table
+	 *
+	 * @return
+	 */
+	public GlobalTable getGlobalTableRows(String scope, String code, String table, String json) {
+		HashMap<String,String> map = new HashMap();
+		map.put("scope", scope);
+		map.put("code", code);
+		map.put("table", table);
+		map.put("json", json);
+		return Generator.executeSync(rpcService.getGlobalTableRows(map));
+	}
+
+    /**
+     * 获得 ram/eos
+     *
+     * @param
+     *
+     * @return
+     */
+    public Float getRamRate() {
+		RamMarketTable ramMarket = this.getRamMarketTableRows("eosio", "eosio", "rammarket", "true");
+		List<RamMarketRows> rows = ramMarket.getRows();
+        RamMarketRows row = rows.get(0);
+
+        Base base = row.getBase();
+        String base_balance_str = base.getBalance();
+//        System.out.println("base_balance_str: " + base_balance_str);
+
+        String[] sArray = base_balance_str.split("\\s+");
+        Float base_balance = Float.parseFloat(sArray[0]);
+//        System.out.println("base_balance: " + base_balance);
+
+        Quote quote = row.getQuote();
+        String quote_balance_str = quote.getBalance();
+//        System.out.println("quote_balance_str: " + quote_balance_str);
+
+        sArray = quote_balance_str.split("\\s+");
+        Float quote_balance = Float.parseFloat(sArray[0]);
+//        System.out.println("quote_balance: " + quote_balance);
+
+        Float ram_rate = (quote_balance * 1000 / base_balance);
+//        System.out.println("ram_rate: " + ram_rate);
+
+        BigDecimal bg = new BigDecimal(ram_rate);
+        Float f = bg.setScale(4, BigDecimal.ROUND_HALF_UP).floatValue();
+
+		return f;
+    }
+
+    /**
+     * 获得 ram 使用量
+     *
+     * @param
+     *
+     * @return
+     */
+    public RamUsage getRamUsage() {
+		GlobalTable global = this.getGlobalTableRows("eosio", "eosio", "global", "true");
+        List<GlobalRows> rows = global.getRows();
+		GlobalRows row = rows.get(0);
+        Long max_ram_size = Long.valueOf(row.getMax_ram_size());
+		Long total_ram_bytes_reserved = Long.valueOf(row.getTotal_ram_bytes_reserved());
+
+		System.out.println("max_ram_size: " + max_ram_size +
+						", total_ram_bytes_reserved: " + total_ram_bytes_reserved);
+
+        RamUsage ram_usage = new RamUsage();
+        ram_usage.setMax_ram_size_kb((Long)(max_ram_size / 1024));
+        ram_usage.setReserved_ram_size_kb((Long)(total_ram_bytes_reserved / 1024));
+
+        return ram_usage;
+    }
 
 	/**
 	 * 获得账户信息
@@ -442,6 +547,44 @@ public class Rpc {
 		// data parse
 		String delData = Ese.parseUnDelegateData(account, account, unstakeNetQuantity, unstakeCpuQuantity);
 		delAction.setData(delData);
+
+		// reset expiration
+		tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
+		return pushTransaction("none", tx, new String[] { sign });
+	}
+
+	//refund
+	public Transaction refund(String pk, String account) throws Exception {
+		// get chain info
+		ChainInfo info = getChainInfo();
+		// get block info
+		Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
+
+		// tx
+		Tx tx = new Tx();
+		tx.setExpiration(info.getHeadBlockTime().getTime() / 1000 + 60);
+		tx.setRef_block_num(info.getLastIrreversibleBlockNum());
+		tx.setRef_block_prefix(block.getRefBlockPrefix());
+		tx.setNet_usage_words(0l);
+		tx.setMax_cpu_usage_ms(0l);
+		tx.setDelay_sec(0l);
+
+		// actions
+		List<TxAction> actions = new ArrayList<>();
+		tx.setActions(actions);
+
+		// refund
+		Map<String, Object> refundMap = new LinkedHashMap<>();
+		refundMap.put("owner", account);
+		TxAction refundAction = new TxAction(account, "eosio", "refund", refundMap);
+		actions.add(refundAction);
+
+		// sign
+		String sign = Ecc.signTransaction(pk, new TxSign(info.getChainId(), tx));
+
+		// data parse
+		String refundData = Ese.parseRefundData(account);
+		refundAction.setData(refundData);
 
 		// reset expiration
 		tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));

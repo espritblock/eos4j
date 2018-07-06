@@ -1,6 +1,9 @@
 package io.eblock.eos4j;
 
+import io.eblock.eos4j.api.vo.RamUsage;
 import io.eblock.eos4j.api.vo.transaction.Transaction;
+import io.eblock.eos4j.api.vo.tablerows.GlobalTable;
+import io.eblock.eos4j.api.vo.tablerows.RamMarketTable;
 
 public class Test {
 
@@ -10,9 +13,9 @@ public class Test {
 
 	public static void main(String[] args){
 
-		System.out.println("******************* Ecc Start *******************\n");
-		
-		
+		/*System.out.println("******************* Ecc Start *******************\n");
+
+
 		System.out.println("============= 通过种子生成私钥 ===============");
 		String pk = Ecc.seedPrivate("!@#$%^&*(lajdlkjaksjdlkjaskldM<>?87126162kajsdjlaksd kajdlkaslkd heiuheijpe f[a- si0ausd9asd ahsdvcyasdcasdc ajhsdg8ca"
 				+ "we asds JHDKAHDKKASDKJALSKDKA ooidjajsdua09sid0asdo[paksdajsdlklasdmlk FJKLIKNLK;B/;LP[P'NC;PO'; OOPO;L0["
@@ -27,7 +30,7 @@ public class Test {
 		System.out.println("============= 自定义数据签名 ===============");
 		String sign = Ecc.sign(pk,"is京東價as看到可可是是是@#￥%……&*（CVBNM《d ");
 		System.out.println("sign :" + sign + " \n ");
-		
+
 		System.out.println("============= 转账数据序列化 ===============");
 		String data = Ecc.parseTransferData("fromaccount", "toaccount", "10.0020 SYS", "测试123abcdo./,./!@##$%");
 		System.out.println("seriz data :" + data);
@@ -38,34 +41,128 @@ public class Test {
 		System.out.println("seriz data :" + data1);
 		System.out.println("account eq eosjs seriz " + data1.equals(eosjs_account_seriz));
 
-		
+
 		System.out.println("\n******************* Ecc End *******************\n\n\n");
+
+
+		System.out.println("******************* Rpc Start *******************\n");*/
 		
 		
-		System.out.println("******************* Rpc Start *******************\n");
-		
-		
-		Rpc rpc = new Rpc("http://112.74.202.161:8888");
-		
-		System.out.println("============= 转账 ===============");
+//		Rpc rpc = new Rpc("http://mainnet.genereos.io");
+//		Rpc rpc = new Rpc("https://api1-imtoken.eosasia.one");
+		Rpc rpc = new Rpc("http://101.132.189.59:9014");
+//		Rpc rpc = new Rpc("http://mainnet1.eos.ren:8883");
+
+		/*System.out.println("============= 转账 ===============");
 		try {
 			Transaction t1 = rpc.transfer("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3","espritblocke", "inita","initb", "12.2821 MSP", "");
 			System.out.println("转账成功 = " + t1.getTransactionId()+" \n ");
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		
+
 		System.out.println("============= 创建账户并且抵押 ===============");
-		try {	
-			Transaction t2 = rpc.createAccount("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3","eosio","ccccc..bbbbb", "EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx","EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx", 8192l, "0.01 SYS","0.01 SYS", 0l);
+		try {
+			Transaction t2 = rpc.createAccount("5JAFd3qAYoGBRMn32Yp3uKCL5YqwZqAMUeNm6AvwRQdyMQGPLdK",
+					"zebrawallet1",
+					"aaaabbbbcc33",
+					"EOS7GXjTTTozQpXQFFJVWpTaW8t3xu2WxULizQYn8tKYmVjgtooLx",
+					"EOS7GXjTTTozQpXQFFJVWpTaW8t3xu2WxULizQYn8tKYmVjgtooLx",
+					4096l,
+					"0.0001 EOS",
+					"0.0001 EOS",
+					0l);
 			System.out.println("创建成功 = " + t2.getTransactionId()+" \n ");
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
+
 		System.out.println("============= 创建账户不抵押 ===============");
-		try {	
-			Transaction t3 = rpc.createAccount("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3","eosio","bbbb..54321", "EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx","EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx", 8192l);
+		try {
+			Transaction t3 = rpc.createAccount("5JAFd3qAYoGBRMn32Yp3uKCL5YqwZqAMUeNm6AvwRQdyMQGPLdK",
+					"zebrawallet1",
+					"aaaabbbbcc25",
+					"EOS7qrN5QrPCb3AU3jnSPwSuN5qWWK6cZkdk2p12BZAGTuVpyN7Dk",
+					"EOS7qrN5QrPCb3AU3jnSPwSuN5qWWK6cZkdk2p12BZAGTuVpyN7Dk",
+					8192l);
 			System.out.println("创建成功 = " + t3.getTransactionId()+" \n ");
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}*/
+
+		/*System.out.println("============= delegate ===============");
+		try {
+			Transaction t2 = rpc.delegate("5JAFd3qAYoGBRMn32Yp3uKCL5YqwZqAMUeNm6AvwRQdyMQGPLdK",
+					"zebrawallet1",
+					"0.0001 EOS",
+					"0.0001 EOS",
+					0l);
+			System.out.println("抵押成功 = " + t2.getTransactionId()+" \n ");
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}*/
+
+		/*System.out.println("============= undelegate ===============");
+		try {
+			Transaction t2 = rpc.undelegate("5JAFd3qAYoGBRMn32Yp3uKCL5YqwZqAMUeNm6AvwRQdyMQGPLdK",
+					"zebrawallet1",
+					"0.01 EOS",
+					"0.01 EOS");
+			System.out.println("赎回成功 = " + t2.getTransactionId()+" \n ");
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}*/
+
+		/*System.out.println("============= buy ram ===============");
+		try {
+			Transaction t2 = rpc.buyRam("5JAFd3qAYoGBRMn32Yp3uKCL5YqwZqAMUeNm6AvwRQdyMQGPLdK",
+					"zebrawallet1",
+					1l);
+			System.out.println("购买成功 = " + t2.getTransactionId()+" \n ");
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}*/
+
+		/*System.out.println("============= sell ram ===============");
+		try {
+			Transaction t2 = rpc.sellRam("5JAFd3qAYoGBRMn32Yp3uKCL5YqwZqAMUeNm6AvwRQdyMQGPLdK",
+					"zebrawallet1",
+					1000l);
+			System.out.println("卖出成功 = " + t2.getTransactionId()+" \n ");
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}*/
+
+		/*System.out.println("============= refund ===============");
+		try {
+			Transaction t2 = rpc.refund("5JAFd3qAYoGBRMn32Yp3uKCL5YqwZqAMUeNm6AvwRQdyMQGPLdK",
+					"zebrawallet1");
+			System.out.println("refund成功 = " + t2.getTransactionId()+" \n ");
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}*/
+
+		/*System.out.println("============= Get Table Rows ===============");
+		try {
+			TableRows r = rpc.getTableRows("eosio", "eosio", "rammarket", "true");
+//			System.out.println("Get Table Rows成功 = " + r.getRows()[0].getSupply() +" \n ");
+			System.out.println("Get Table Rows成功 = " + r.getRows() + " \n ");
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}*/
+
+		/*System.out.println("============= Get RAM Rate ===============");
+		try {
+			Float f = rpc.getRamRate();
+			System.out.println("Get RAM Rate 成功 = " + f + " \n ");
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}*/
+
+		System.out.println("============= Get RAM Use ===============");
+		try {
+			RamUsage r = rpc.getRamUsage();
+			System.out.println("Get RAM Use 成功 = " + r.getMax_ram_size_kb() + "," + r.getReserved_ram_size_kb() + " \n ");
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
