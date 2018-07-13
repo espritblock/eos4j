@@ -15,6 +15,8 @@ import io.eblock.eos4j.api.service.RpcService;
 import io.eblock.eos4j.api.utils.Generator;
 import io.eblock.eos4j.api.vo.Block;
 import io.eblock.eos4j.api.vo.ChainInfo;
+import io.eblock.eos4j.api.vo.TableRows;
+import io.eblock.eos4j.api.vo.TableRowsReq;
 import io.eblock.eos4j.api.vo.account.Account;
 import io.eblock.eos4j.api.vo.transaction.Transaction;
 import io.eblock.eos4j.api.vo.transaction.push.Tx;
@@ -68,6 +70,15 @@ public class Rpc {
 		return Generator.executeSync(rpcService.getAccount(Collections.singletonMap("account_name", account)));
 	}
 
+	/**
+	 * 获得table数据
+	 * @param req
+	 * @return
+	 */
+	public TableRows getTableRows(TableRowsReq req) {
+		return Generator.executeSync(rpcService.getTableRows(req));
+	}
+	
 	/**
 	 * 发送请求
 	 * 
