@@ -22,6 +22,14 @@ public class ApiException extends RuntimeException {
 		super(cause);
 	}
 
+	public ApiError getError() {
+		return error;
+	}
+
+	public void setError(ApiError error) {
+		this.error = error;
+	}
+
 	@Override
 	public String getMessage() {
 		if (error != null) {
