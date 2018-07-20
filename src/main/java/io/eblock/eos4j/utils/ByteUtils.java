@@ -3,6 +3,7 @@ package io.eblock.eos4j.utils;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.text.NumberFormat;
 import java.util.stream.IntStream;
 
 /**
@@ -170,6 +171,9 @@ public class ByteUtils {
 	public static byte[] writerAsset(String v) {
 		String _value[] = v.split(" ");
 		String amount = _value[0];
+		if(amount==null || !amount.matches("^[0-9]+(.[0-9]+)?$")){
+			throw new EException("amount_error", "amount error");
+		}
 		String sym = _value[1];
 		String precision = sym.split(",")[0];
 		String symbol = sym.split(",")[1].split("@")[0];
