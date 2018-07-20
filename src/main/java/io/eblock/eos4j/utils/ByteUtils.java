@@ -178,6 +178,9 @@ public class ByteUtils {
 		int pad = Integer.parseInt(precision);
 		StringBuffer bf = new StringBuffer(part[0] + ".");
 		if (part.length > 1) {
+			if(part[1].length()>pad) {
+				throw new EException("precision_error", "precision max "+pad);
+			}
 			pad = Integer.parseInt(precision) - part[1].length();
 			bf.append(part[1]);
 		}
