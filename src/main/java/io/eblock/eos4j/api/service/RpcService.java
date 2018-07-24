@@ -1,10 +1,11 @@
 package io.eblock.eos4j.api.service;
 
+import java.util.List;
 import java.util.Map;
-
 import io.eblock.eos4j.api.vo.Block;
-import io.eblock.eos4j.api.vo.TableRows;
 import io.eblock.eos4j.api.vo.ChainInfo;
+import io.eblock.eos4j.api.vo.CurrencyBalanceReq;
+import io.eblock.eos4j.api.vo.TableRows;
 import io.eblock.eos4j.api.vo.TableRowsReq;
 import io.eblock.eos4j.api.vo.account.Account;
 import io.eblock.eos4j.api.vo.transaction.Transaction;
@@ -29,6 +30,9 @@ public interface RpcService {
 
 	@POST("/v1/chain/get_account")
 	Call<Account> getAccount(@Body Map<String, String> requestFields);
+	
+	@POST("/v1/chain/get_currency_balance")
+    Call<List<String>> getCurrencyBalance(@Body CurrencyBalanceReq request);
 
 	@POST("/v1/chain/push_transaction")
 	Call<Transaction> pushTransaction(@Body TxRequest request);

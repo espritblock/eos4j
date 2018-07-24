@@ -8,13 +8,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.eblock.eos4j.api.service.RpcService;
 import io.eblock.eos4j.api.utils.Generator;
 import io.eblock.eos4j.api.vo.Block;
 import io.eblock.eos4j.api.vo.ChainInfo;
+import io.eblock.eos4j.api.vo.CurrencyBalanceReq;
 import io.eblock.eos4j.api.vo.TableRows;
 import io.eblock.eos4j.api.vo.TableRowsReq;
 import io.eblock.eos4j.api.vo.account.Account;
@@ -68,6 +67,18 @@ public class Rpc {
 	 */
 	public Account getAccount(String account) {
 		return Generator.executeSync(rpcService.getAccount(Collections.singletonMap("account_name", account)));
+	}
+	
+	/**
+	 * 
+	 * 查询帐户余额
+	 * @param req
+	 * @return 
+	 * @date 2018年7月24日
+	 * @author patrick
+	 */
+	public List<String> getCurrencyBalance(CurrencyBalanceReq req) {
+	    return Generator.executeSync(rpcService.getCurrencyBalance(req));
 	}
 
 	/**
