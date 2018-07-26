@@ -27,7 +27,7 @@ public class Tx extends BaseVo{
 
 	private Long delay_sec;
 
-	private List<String> context_free_actions = new ArrayList<>();
+	private List<Object> context_free_actions = new ArrayList<>();
 
 	private List<TxAction> actions;
 
@@ -81,11 +81,11 @@ public class Tx extends BaseVo{
 		this.delay_sec = delay_sec;
 	}
 
-	public List<String> getContext_free_actions() {
+	public List<Object> getContext_free_actions() {
 		return context_free_actions;
 	}
 
-	public void setContext_free_actions(List<String> context_free_actions) {
+	public void setContext_free_actions(List<Object> context_free_actions) {
 		this.context_free_actions = context_free_actions;
 	}
 
