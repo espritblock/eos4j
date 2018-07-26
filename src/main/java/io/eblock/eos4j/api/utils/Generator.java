@@ -35,6 +35,15 @@ public class Generator {
 				return response.body();
 			} else {
 				ApiError apiError = getApiError(response);
+                System.out.println("msg: " + apiError.getMessage());
+                System.out.println("code: " + apiError.getCode());
+                System.out.println("err code: " + apiError.getError().getCode());
+                System.out.println("err name: " + apiError.getError().getName());
+                System.out.println("err what: " + apiError.getError().getWhat());
+                if (apiError.getError().getDetails().length > 0)
+                {
+                    System.out.println("err detail: " + apiError.getError().getDetails()[0].getMessage());
+                }
 				throw new ApiException(apiError);
 			}
 		} catch (IOException e) {
