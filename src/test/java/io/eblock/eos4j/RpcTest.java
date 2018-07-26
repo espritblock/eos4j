@@ -1,10 +1,13 @@
 package io.eblock.eos4j;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.Test;
 import com.alibaba.fastjson.JSONObject;
 import io.eblock.eos4j.api.utils.Generator;
 import io.eblock.eos4j.api.vo.RamUsage;
+import io.eblock.eos4j.api.vo.account.Balance;
 import io.eblock.eos4j.api.vo.tablerows.RamMarketTable;
 import io.eblock.eos4j.api.vo.transaction.Transaction;
 import io.eblock.eos4j.utils.JsonFormatTool;
@@ -290,7 +293,13 @@ public class RpcTest {
      */
     @Test
     public void getCurrencyBalance() {
-        System.out.println(rpc.getCurrencyBalance("eosio.token", "yanghaijun", "EOS"));
+        List<Balance> mBalanceList = rpc.getCurrencyBalance("maitoken", "chao", "MAI");
+
+        if (mBalanceList != null && mBalanceList.size() > 0) {
+            for (Balance mBalance : mBalanceList) {
+                System.out.println(mBalance.getAmount() + mBalance.getSymbol());
+            }
+        }
     }
 
     /**
