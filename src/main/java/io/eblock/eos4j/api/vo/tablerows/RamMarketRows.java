@@ -14,6 +14,12 @@ public class RamMarketRows {
 
     @JsonProperty("quote")
     private Quote quote;
+    
+    @JsonProperty("max_ram_size")
+    private String max_ram_size;
+
+    @JsonProperty("total_ram_bytes_reserved")
+    private String total_ram_bytes_reserved;
 
     public RamMarketRows() {
     }
@@ -41,4 +47,21 @@ public class RamMarketRows {
     public void setQuote(Quote quote) {
         this.quote = quote;
     }
+
+    public String getMax_ram_size() {
+        return max_ram_size;
+    }
+    
+    public void setMax_ram_size(String max_ram_size) {
+        this.max_ram_size = max_ram_size;
+    }
+    
+    public String getTotal_ram_bytes_reserved() {
+        return total_ram_bytes_reserved;
+    }
+    
+    public void setTotal_ram_bytes_reserved(String total_ram_bytes_reserved) {
+        this.total_ram_bytes_reserved = total_ram_bytes_reserved;
+    }
+    
 }

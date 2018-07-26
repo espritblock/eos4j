@@ -17,13 +17,9 @@ import io.eblock.eos4j.api.utils.Generator;
 import io.eblock.eos4j.api.vo.Block;
 import io.eblock.eos4j.api.vo.ChainInfo;
 import io.eblock.eos4j.api.vo.RamUsage;
-import io.eblock.eos4j.api.vo.TableRows;
-import io.eblock.eos4j.api.vo.TableRowsReq;
 import io.eblock.eos4j.api.vo.account.Account;
 import io.eblock.eos4j.api.vo.account.Balance;
 import io.eblock.eos4j.api.vo.tablerows.Base;
-import io.eblock.eos4j.api.vo.tablerows.GlobalRows;
-import io.eblock.eos4j.api.vo.tablerows.GlobalTable;
 import io.eblock.eos4j.api.vo.tablerows.Quote;
 import io.eblock.eos4j.api.vo.tablerows.RamMarketRows;
 import io.eblock.eos4j.api.vo.tablerows.RamMarketTable;
@@ -81,7 +77,16 @@ public class Rpc {
         return Generator.executeSync(rpcService.getAccount(Collections.singletonMap("account_name", account)));
     }
 
-    // {"code": "eosio.token","account":"yanghaijun","symbol":"EOS"}
+    /**
+     * 
+     * 查询帐户余额
+     * @param code 合约账户
+     * @param account 查询账户
+     * @param symbol 币种
+     * @return 
+     * @date 2018年7月26日
+     * @author patrick
+     */
     public List<Balance> getCurrencyBalance(String code, String account, String symbol) {
 
         Map<String, String> param = new LinkedHashMap<>();
@@ -96,16 +101,6 @@ public class Rpc {
         }
 
         return null;
-    }
-
-    /**
-     * 获得table数据
-     * 
-     * @param req
-     * @return
-     */
-    public TableRows getTableRows(TableRowsReq req) {
-        return Generator.executeSync(rpcService.getTableRows(req));
     }
 
     /**
@@ -325,23 +320,6 @@ public class Rpc {
     }
 
     /**
-     * 获得Table Rows
-     *
-     * @param scope
-     * @param code
-     * @param table
-     * @return
-     */
-    public GlobalTable getGlobalTableRows(String scope, String code, String table, String json) {
-        HashMap<String, String> map = new HashMap();
-        map.put("scope", scope);
-        map.put("code", code);
-        map.put("table", table);
-        map.put("json", json);
-        return Generator.executeSync(rpcService.getGlobalTableRows(map));
-    }
-
-    /**
      * 获得 ram/eos
      *
      * @param
@@ -384,9 +362,9 @@ public class Rpc {
      * @return
      */
     public RamUsage getRamUsage() {
-        GlobalTable global = this.getGlobalTableRows("eosio", "eosio", "global", "true");
-        List<GlobalRows> rows = global.getRows();
-        GlobalRows row = rows.get(0);
+        RamMarketTable mRamMarketTable = this.getRamMarketTableRows("eosio", "eosio", "global", "true");
+        List<RamMarketRows> rows = mRamMarketTable.getRows();
+        RamMarketRows row = rows.get(0);
         Long max_ram_size = Long.valueOf(row.getMax_ram_size());
         Long total_ram_bytes_reserved = Long.valueOf(row.getTotal_ram_bytes_reserved());
 
