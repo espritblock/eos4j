@@ -92,28 +92,38 @@
 	</build>
 
 
+	<!-- mvn dependency:copy-dependencies -DoutputDirectory=lib -DincludeScope=compile -->
 	<repositories>
 		<repository>
-			<id>nexus</id>
-			<name>Team Nexus Repository</name>
-			<url>http://dev.esongbai.xyz/nexus/content/groups/public/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</snapshots>
+			<id>public</id>
+			<name>Public Repositories</name>
+			<url>http://192.168.1.253:8081/nexus/content/groups/public/</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
-			<id>nexus</id>
-			<name>Team Nexus Repository</name>
-			<url>http://dev.esongbai.xyz/nexus/content/groups/public/</url>
+			<id>public</id>
+			<name>Public Repositories</name>
+			<url>http://192.168.1.253:8081/nexus/content/groups/public/</url>
 		</pluginRepository>
 	</pluginRepositories>
+
 	<distributionManagement>
 		<repository>
 			<id>nexus-releases</id>
-			<url>http://dev.esongbai.xyz/nexus/content/repositories/releases/</url>
+			<name>Nexus Releases Repository</name>
+			<url>http://192.168.1.253:8081/nexus/content/repositories/releases/</url>
 		</repository>
+
 		<snapshotRepository>
 			<id>nexus-snapshots</id>
-			<url>http://dev.esongbai.xyz/nexus/content/repositories/snapshots/</url>
+			<name>Nexus Snapshots Repository</name>
+			<url>http://192.168.1.253:8081/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
