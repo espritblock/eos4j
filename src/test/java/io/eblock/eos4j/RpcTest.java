@@ -2,7 +2,7 @@ package io.eblock.eos4j;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 import org.junit.Test;
 import com.alibaba.fastjson.JSONObject;
 import io.eblock.eos4j.api.utils.Generator;
@@ -15,11 +15,7 @@ import retrofit2.Call;
 
 public class RpcTest {
 
-    static Rpc rpc = new Rpc("http://192.168.1.50:8888");
-
-    static final String eosjs_transfer_seriz = "00f2d4142123e95d0000c85353840ccdb486010000000000045359530000000019e6b58be8af95313233616263646f2e2f2c2e2f214023232425";
-
-    static final String eosjs_account_seriz = "0000000000ea30550002a2f164772b5601000000010003ee4221c9c3f4f62646e3c758dbb8abaae506a559f67148a76968fa6b0f0868140100000001000000010003ba8de2f029cae85e7ca5c9f591bb17b86d750c5116cec30d94100e16e446d41501000000";
+    static Rpc rpc = new Rpc("http://192.168.1.51:8888");
 
     /**
      * 通过种子生成私钥
@@ -29,7 +25,7 @@ public class RpcTest {
      */
     @Test
     public void seedPrivate() {
-        String pk = Ecc.seedPrivate("!@#$%^&*(lajdlkjaksjdlkjaskldM<>?87126162kajsdjlaksdkajdlkaslkd heiuheijpe f[a- si0ausd9asd ahsdvcyasdcasdc ajhsdg8ca" + "we asdsJHDKAHDKKASDKJALSKDKA ooidjajsdua09sid0asdo[paksdajsdlklasdmlk FJKLIKNLK;B/;LP[P'NC;PO';OOPO;L0[" + "XP'C'[FG[" + "19218728909107328972309289832098012");
+        String pk = Ecc.seedPrivate(UUID.randomUUID().toString());
         System.out.println("private key :" + pk + "\n");
     }
 
@@ -41,7 +37,8 @@ public class RpcTest {
      */
     @Test
     public void privateToPublic() {
-        String pk = "5KakyGuKvDQjPyzwskqYay6Vk5dnN2M12UbvCQV7VJgQ3pfXS59";
+        //String pk = "5JVq1HBfx3FePYzC3oq28o9KVS3uHjbrH8ZKARn9KEnn4BJPPDs";//pengchao1
+        String pk = "5JLYghzZSXLRYDtmCQTDi4KZWh1dEBbaBixVG7hSwuJPqoZniDU";//pengchao2
         String pu = Ecc.privateToPublic(pk);
         System.out.println("public key :" + pu + " \n ");
     }
@@ -54,8 +51,8 @@ public class RpcTest {
      */
     @Test
     public void sign() {
-        String pk = "5KakyGuKvDQjPyzwskqYay6Vk5dnN2M12UbvCQV7VJgQ3pfXS59";
-        String sign = Ecc.sign(pk, "is京東價as看到可可是是是@#￥%……&*（CVBNM《d ");
+        String pk = "5JVq1HBfx3FePYzC3oq28o9KVS3uHjbrH8ZKARn9KEnn4BJPPDs";
+        String sign = Ecc.sign(pk, UUID.randomUUID().toString());
         System.out.println("sign :" + sign + " \n ");
     }
 
@@ -69,7 +66,6 @@ public class RpcTest {
     public void parseTransferData() {
         String data = Ecc.parseTransferData("fromaccount", "toaccount", "10.0020 SYS", "测试123abcdo./,./!@##$%");
         System.out.println("seriz data :" + data);
-        System.out.println("transfer eq eosjs seriz " + data.equals(eosjs_transfer_seriz) + " \n");
     }
 
     /**
@@ -80,9 +76,8 @@ public class RpcTest {
      */
     @Test
     public void parseAccountData() {
-        String data1 = Ecc.parseAccountData("eosio", "espritbloc1.", "EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx", "EOS8FPooohZiiCAYXahWCQRxgXXzUbS2gNELAeYCUgGdDMbd2FHQT");
+        String data1 = Ecc.parseAccountData("eosio", "pengchao1", "EOS6TGHAk9KtSu6VUTrG7vw8jPeLDKyDP9gdFahLzcjYixt8x2aUU", "EOS6TGHAk9KtSu6VUTrG7vw8jPeLDKyDP9gdFahLzcjYixt8x2aUU");
         System.out.println("seriz data :" + data1);
-        System.out.println("account eq eosjs seriz " + data1.equals(eosjs_account_seriz));
     }
 
     /**
@@ -94,7 +89,7 @@ public class RpcTest {
     @Test
     public void transfer() {
         try {
-            Transaction t1 = rpc.transfer("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "espritblocke", "inita", "initb", "12.2821 MSP", "");
+            Transaction t1 = rpc.transfer("5J7UP2eBtgJiVCeCt368zWuiNdMdAoTwF4worSgHBxnMz7a5476", "maitoken", "maimarket", "pengchao2", "11.000 MAI", "");
             System.out.println("转账成功 = " + t1.getTransactionId() + " \n ");
         }
         catch (Exception ex) {
@@ -112,7 +107,7 @@ public class RpcTest {
     public void createAccountMortgage() {
         System.out.println("============= 创建账户并且抵押 ===============");
         try {
-            Transaction t2 = rpc.createAccount("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "eosio", "ccccc..bbbbb", "EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx", "EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx", 8192l, "0.01 SYS", "0.01 SYS", 0l);
+            Transaction t2 = rpc.createAccount("5JaEk4LzqDGyfQupnXuqTfMgiKbnYkaPaTfCWLhsEmsKMRkJoYG", "eosio", "pengchao1", "EOS6TGHAk9KtSu6VUTrG7vw8jPeLDKyDP9gdFahLzcjYixt8x2aUU", "EOS6TGHAk9KtSu6VUTrG7vw8jPeLDKyDP9gdFahLzcjYixt8x2aUU", 8192l, "100.00 MPC", "100.01 MPC", 0l);
             System.out.println("创建成功 = " + t2.getTransactionId() + " \n ");
         }
         catch (Exception ex) {
@@ -130,7 +125,7 @@ public class RpcTest {
     public void createAccountNotMortgage() {
         System.out.println("============= 创建账户不抵押 ===============");
         try {
-            Transaction t3 = rpc.createAccount("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "eosio", "bbbb..54321", "EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx", "EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx", 8192l);
+            Transaction t3 = rpc.createAccount("5JaEk4LzqDGyfQupnXuqTfMgiKbnYkaPaTfCWLhsEmsKMRkJoYG", "eosio", "pengchao2", "EOS7pvoCFtgwHbPfCKfd99EXB1h4NkJ1AWjpA4WMJ8WJsdzn82sfu", "EOS7pvoCFtgwHbPfCKfd99EXB1h4NkJ1AWjpA4WMJ8WJsdzn82sfu", 8192l);
             System.out.println("创建成功 = " + t3.getTransactionId() + " \n ");
         }
         catch (Exception ex) {
@@ -280,8 +275,6 @@ public class RpcTest {
         }
         catch (Exception ex) {
             ex.printStackTrace();
-
-            System.out.println("\n******************* Rpc End *******************");
         }
     }
 
@@ -293,7 +286,7 @@ public class RpcTest {
      */
     @Test
     public void getCurrencyBalance() {
-        List<Balance> mBalanceList = rpc.getCurrencyBalance("maitoken", "chao", "MAI");
+        List<Balance> mBalanceList = rpc.getCurrencyBalance("maitoken", "pengchao2", "MAI");
 
         if (mBalanceList != null && mBalanceList.size() > 0) {
             for (Balance mBalance : mBalanceList) {
