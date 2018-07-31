@@ -3,9 +3,7 @@ package io.eblock.eos4j.api.vo.transaction.receive;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.eblock.eos4j.api.vo.transaction.push.Tx;
-import lombok.Data;
 
-@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BlockTrx {
 
