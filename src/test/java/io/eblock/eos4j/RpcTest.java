@@ -89,7 +89,7 @@ public class RpcTest {
     @Test
     public void transfer() {
         try {
-            Transaction t1 = rpc.transfer("5J7UP2eBtgJiVCeCt368zWuiNdMdAoTwF4worSgHBxnMz7a5476", "maitoken", "maimarket", "pengchao2", "11.000 MAI", "");
+            Transaction t1 = rpc.transfer("5JLYghzZSXLRYDtmCQTDi4KZWh1dEBbaBixVG7hSwuJPqoZniDU", "maitoken", "pengchao2", "pengchao1", "1.000 MAI", "备注信息！");
             System.out.println("转账成功 = " + t1.getTransactionId() + " \n ");
         }
         catch (Exception ex) {
