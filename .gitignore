@@ -25,5 +25,5 @@ hs_err_pid*
 /.project
 /target
 /.settings
-
 *.iml
+/.idea
