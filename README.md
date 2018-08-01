@@ -9,8 +9,8 @@ change writeName add writeUint64 support custom contract
 ## support offline sign
  
  ```
- 	OfflineSign sign = new OfflineSign();
-	String content =sign.transfer(params,"5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3","eosio.token","eeeeeeeeeeee", "555555555551", "372.0993 EOS", "test");
+OfflineSign sign = new OfflineSign();
+String content =sign.transfer(params,"5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3","eosio.token","eeeeeeeeeeee", "555555555551", "372.0993 EOS", "test");
 	
  ```
 
