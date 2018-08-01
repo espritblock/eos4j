@@ -32,7 +32,7 @@ public interface RpcService {
 
 	@POST("/v1/chain/push_transaction")
 	Call<Transaction> pushTransaction(@Body TxRequest request);
-	
+
 	@POST("/v1/chain/get_table_rows")
 	Call<TableRows> getTableRows(@Body TableRowsReq request);
 
