@@ -314,6 +314,7 @@ public class RpcTest {
      * @date 2018年8月3日
      * @author patrick
      */
+    @Test
     public void testOfflineCreate() {
         // 获取离线签名参数
         SignParam params = rpc.getOfflineSignParams(60l);
@@ -347,6 +348,7 @@ public class RpcTest {
      * @date 2018年8月3日
      * @author patrick
      */
+    @Test
     public void testOfflineTransfer() {
         // 获取离线签名参数
         SignParam params = rpc.getOfflineSignParams(60l);
