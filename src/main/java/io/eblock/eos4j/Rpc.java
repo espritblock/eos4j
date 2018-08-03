@@ -16,6 +16,7 @@ import io.eblock.eos4j.api.service.RpcService;
 import io.eblock.eos4j.api.utils.Generator;
 import io.eblock.eos4j.api.vo.Block;
 import io.eblock.eos4j.api.vo.ChainInfo;
+import io.eblock.eos4j.api.vo.SignParam;
 import io.eblock.eos4j.api.vo.RamUsage;
 import io.eblock.eos4j.api.vo.account.Account;
 import io.eblock.eos4j.api.vo.account.Balance;
@@ -118,6 +119,37 @@ public class Rpc {
         String mapJakcson = mapper.writeValueAsString(new TxRequest(compression, pushTransaction, signatures));
         System.out.println(mapJakcson);
         return Generator.executeSync(rpcService.pushTransaction(new TxRequest(compression, pushTransaction, signatures)));
+    }
+    
+    /**
+     * 发送交易
+     * 
+     * @param tx
+     * @return
+     * @throws Exception
+     */
+    public Transaction pushTransaction(String tx) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        TxRequest txObj = mapper.readValue(tx, TxRequest.class);
+        return Generator.executeSync(rpcService.pushTransaction(txObj));
+    }
+    /**
+     * 获取离线签名参数
+     * 
+     * @param exp
+     *            过期时间秒
+     * @return
+     */
+    public SignParam getOfflineSignParams(Long exp) {
+        SignParam params = new SignParam();
+        ChainInfo info = getChainInfo();
+        Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
+        params.setChainId(info.getChainId());
+        params.setHeadBlockTime(info.getHeadBlockTime());
+        params.setLastIrreversibleBlockNum(info.getLastIrreversibleBlockNum());
+        params.setRefBlockPrefix(block.getRefBlockPrefix());
+        params.setExp(exp);
+        return params;
     }
 
     /**

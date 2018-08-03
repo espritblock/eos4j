@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.UUID;
 import org.junit.Test;
 import com.alibaba.fastjson.JSONObject;
+import io.eblock.eos4j.api.exception.ApiException;
 import io.eblock.eos4j.api.utils.Generator;
 import io.eblock.eos4j.api.vo.RamUsage;
+import io.eblock.eos4j.api.vo.SignParam;
 import io.eblock.eos4j.api.vo.account.Balance;
 import io.eblock.eos4j.api.vo.tablerows.RamMarketTable;
 import io.eblock.eos4j.api.vo.transaction.Transaction;
@@ -37,8 +39,8 @@ public class RpcTest {
      */
     @Test
     public void privateToPublic() {
-        //String pk = "5JVq1HBfx3FePYzC3oq28o9KVS3uHjbrH8ZKARn9KEnn4BJPPDs";//pengchao1
-        String pk = "5JLYghzZSXLRYDtmCQTDi4KZWh1dEBbaBixVG7hSwuJPqoZniDU";//pengchao2
+        // String pk = "5JVq1HBfx3FePYzC3oq28o9KVS3uHjbrH8ZKARn9KEnn4BJPPDs";//pengchao1
+        String pk = "5JLYghzZSXLRYDtmCQTDi4KZWh1dEBbaBixVG7hSwuJPqoZniDU";// pengchao2
         String pu = Ecc.privateToPublic(pk);
         System.out.println("public key :" + pu + " \n ");
     }
@@ -304,6 +306,72 @@ public class RpcTest {
     @Test
     public void getBlock() {
         println(rpc.getRpcService().getBlock(Collections.singletonMap("block_num_or_id", "1000")));
+    }
+
+    /**
+     * 创建账户离线签名
+     * 
+     * @date 2018年8月3日
+     * @author patrick
+     */
+    public void testOfflineCreate() {
+        // 获取离线签名参数
+        SignParam params = rpc.getOfflineSignParams(60l);
+        // 离线签名
+        OfflineSign sign = new OfflineSign();
+        // 交易信息
+        String content = "";
+        try {
+            content = sign.transfer(params, "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "eosio.token", "eeeeeeeeeeee", "555555555551", "372.0993 EOS", "test");
+            System.out.println(content);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 广播交易
+        try {
+            Transaction tx = rpc.pushTransaction(content);
+            System.out.println(tx.getTransactionId());
+        }
+        catch (ApiException ex) {
+            System.out.println(ex.getError().getCode());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 转账离线签名
+     * 
+     * @date 2018年8月3日
+     * @author patrick
+     */
+    public void testOfflineTransfer() {
+        // 获取离线签名参数
+        SignParam params = rpc.getOfflineSignParams(60l);
+        // 离线签名
+        OfflineSign sign = new OfflineSign();
+        // 交易信息
+        String content = "";
+        try {
+            content = sign.createAccount(params, "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "eeeeeeeeeeee", "555555555551", "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", 8000l);
+            System.out.println(content);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 广播交易
+        try {
+            Transaction tx = rpc.pushTransaction(content);
+            System.out.println(tx.getTransactionId());
+        }
+        catch (ApiException ex) {
+            System.out.println(ex.getError().getCode());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static void println(Object object) {

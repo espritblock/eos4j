@@ -3,7 +3,6 @@ package io.eblock.eos4j.utils;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.text.NumberFormat;
 import java.util.stream.IntStream;
 
 /**
