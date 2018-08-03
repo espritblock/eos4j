@@ -42,13 +42,13 @@ public class OfflineSign {
     /**
      * 离线签名转账
      * 
-     * @param signParam
-     * @param pk
-     * @param contractAccount
-     * @param from
-     * @param to
-     * @param quantity
-     * @param memo
+     * @param signParam 签名参数
+     * @param pk 私钥
+     * @param contractAccount 合约帐户
+     * @param from 转出帐户
+     * @param to 转入帐户
+     * @param quantity 转帐数量
+     * @param memo 备注
      * @return
      * @throws Exception
      */
@@ -86,13 +86,13 @@ public class OfflineSign {
     /**
      * 离线签名创建账户
      * 
-     * @param signParam
-     * @param pk
-     * @param creator
-     * @param newAccount
-     * @param owner
-     * @param active
-     * @param buyRam
+     * @param signParam 签名参数
+     * @param pk 私钥
+     * @param creator 创建者
+     * @param newAccount 新帐户名
+     * @param owner owner权限的公钥
+     * @param active active权限的公钥
+     * @param buyRam 抵押内存数量
      * @return
      * @throws Exception
      */

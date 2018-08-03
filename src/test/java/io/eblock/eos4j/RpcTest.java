@@ -323,23 +323,23 @@ public class RpcTest {
         // 交易信息
         String content = "";
         try {
-            content = sign.transfer(params, "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "eosio.token", "eeeeeeeeeeee", "555555555551", "372.0993 EOS", "test");
+            content = sign.createAccount(params, "5JVq1HBfx3FePYzC3oq28o9KVS3uHjbrH8ZKARn9KEnn4BJPPDs", "pengchao1", "pengchao22", "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", 8000l);
             System.out.println(content);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         // 广播交易
-        try {
-            Transaction tx = rpc.pushTransaction(content);
-            System.out.println(tx.getTransactionId());
-        }
-        catch (ApiException ex) {
-            System.out.println(ex.getError().getCode());
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Transaction tx = rpc.pushTransaction(content);
+//            System.out.println(tx.getTransactionId());
+//        }
+//        catch (ApiException ex) {
+//            System.out.println(ex.getError().getCode());
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -357,7 +357,7 @@ public class RpcTest {
         // 交易信息
         String content = "";
         try {
-            content = sign.createAccount(params, "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "eeeeeeeeeeee", "555555555551", "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", 8000l);
+            content = sign.transfer(params, "5JVq1HBfx3FePYzC3oq28o9KVS3uHjbrH8ZKARn9KEnn4BJPPDs", "maitoken", "pengchao1", "pengchao2", "10.0000 MAI", "test");
             System.out.println(content);
         }
         catch (Exception e) {
