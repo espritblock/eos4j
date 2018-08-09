@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.alibaba.fastjson.JSONObject;
 import io.eblock.eos4j.api.exception.ApiException;
 import io.eblock.eos4j.api.utils.Generator;
+import io.eblock.eos4j.api.vo.ChainInfo;
 import io.eblock.eos4j.api.vo.RamUsage;
 import io.eblock.eos4j.api.vo.SignParam;
 import io.eblock.eos4j.api.vo.account.Balance;
@@ -19,6 +20,30 @@ public class RpcTest {
 
     static Rpc rpc = new Rpc("http://192.168.1.51:8888");
 
+    /**
+     * 
+     * 获得链信息
+     * @date 2018年8月9日
+     * @author patrick
+     */
+    @Test
+    public void getChainInfo() {
+        ChainInfo myChainInfo = new ChainInfo();
+        myChainInfo = rpc.getChainInfo();
+        println(myChainInfo);
+    }
+    
+    /**
+     * 获取区块信息
+     * 
+     * @date 2018年7月26日
+     * @author patrick
+     */
+    @Test
+    public void getBlock() {
+        println(rpc.getRpcService().getBlock(Collections.singletonMap("block_num_or_id", "1")));
+    }
+    
     /**
      * 通过种子生成私钥
      * 
@@ -109,7 +134,7 @@ public class RpcTest {
     public void createAccountMortgage() {
         System.out.println("============= 创建账户并且抵押 ===============");
         try {
-            Transaction t2 = rpc.createAccount("5JaEk4LzqDGyfQupnXuqTfMgiKbnYkaPaTfCWLhsEmsKMRkJoYG", "eosio", "pengchao1", "EOS6TGHAk9KtSu6VUTrG7vw8jPeLDKyDP9gdFahLzcjYixt8x2aUU", "EOS6TGHAk9KtSu6VUTrG7vw8jPeLDKyDP9gdFahLzcjYixt8x2aUU", 8192l, "100.00 MPC", "100.01 MPC", 0l);
+            Transaction t2 = rpc.createAccount("5JhHGPioaq8ciYuVNbCTnnsrmw7RLLEZy4pAjtd4Ptb366HCArt", "eosio", "zbrawfghlet1", "EOS6VKbxfRxtgq79D3r2Bc5JAQgig8gD2Vdu8DoeFK1WGfHmzShor", "EOS6VKbxfRxtgq79D3r2Bc5JAQgig8gD2Vdu8DoeFK1WGfHmzShor", 8192l, "0.001 MPC", "0.001 MPC", 0l);
             System.out.println("创建成功 = " + t2.getTransactionId() + " \n ");
         }
         catch (Exception ex) {
@@ -145,7 +170,7 @@ public class RpcTest {
     public void delegate() {
         System.out.println("============= 抵押 ===============");
         try {
-            Transaction t2 = rpc.delegate("5JAFd3qAYoGBRMn32Yp3uKCL5YqwZqAMUeNm6AvwRQdyMQGPLdK", "zebrawallet1", "0.0001 EOS", "0.0001 EOS", 0l);
+            Transaction t2 = rpc.delegate("5JhHGPioaq8ciYuVNbCTnnsrmw7RLLEZy4pAjtd4Ptb366HCArt", "zebrawallet1", "0.0001 MPC", "0.0001 MPC", 0l);
             System.out.println("抵押成功 = " + t2.getTransactionId() + " \n ");
         }
         catch (Exception ex) {
@@ -288,24 +313,13 @@ public class RpcTest {
      */
     @Test
     public void getCurrencyBalance() {
-        List<Balance> mBalanceList = rpc.getCurrencyBalance("maitoken", "pengchao2", "MAI");
+        List<Balance> mBalanceList = rpc.getCurrencyBalance("maitoken", "chao", "MAI");
 
         if (mBalanceList != null && mBalanceList.size() > 0) {
             for (Balance mBalance : mBalanceList) {
                 System.out.println(mBalance.getAmount() + mBalance.getSymbol());
             }
         }
-    }
-
-    /**
-     * 获取区块信息
-     * 
-     * @date 2018年7月26日
-     * @author patrick
-     */
-    @Test
-    public void getBlock() {
-        println(rpc.getRpcService().getBlock(Collections.singletonMap("block_num_or_id", "1000")));
     }
 
     /**
