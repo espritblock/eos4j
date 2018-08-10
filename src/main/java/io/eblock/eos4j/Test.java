@@ -1,5 +1,10 @@
 package io.eblock.eos4j;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import io.eblock.eos4j.api.vo.transaction.Transaction;
 
 public class Test {
@@ -9,7 +14,6 @@ public class Test {
 	static final String eosjs_account_seriz = "0000000000ea30550002a2f164772b5601000000010003ee4221c9c3f4f62646e3c758dbb8abaae506a559f67148a76968fa6b0f0868140100000001000000010003ba8de2f029cae85e7ca5c9f591bb17b86d750c5116cec30d94100e16e446d41501000000";
 
 	public static void main(String[] args){
-
 		System.out.println("******************* Ecc Start *******************\n");
 		
 		
@@ -70,6 +74,17 @@ public class Test {
 			ex.printStackTrace();
 		}
 		
+		System.out.println("============= 代理投票 ===============");
+		try {
+			List<String> produces = new ArrayList<>();
+			produces.add("pppppeeeeooo");
+			produces.add("mdddssssddds");
+			produces.add("mdjddjddddds");
+			rpc.voteproducer("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "epskdkdsddss","iuewjdkslsdc",produces);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		System.out.println("\n******************* Rpc End *******************");
 	}
 }

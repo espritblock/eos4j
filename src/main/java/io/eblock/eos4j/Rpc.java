@@ -336,4 +336,48 @@ public class Rpc {
 		tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
 		return pushTransaction("none", tx, new String[] { sign });
 	}
+	
+	/**
+	 * 
+	 * @param pk
+	 * @param voter
+	 * @param proxy
+	 * @param producers
+	 * @return
+	 * @throws Exception
+	 */
+	public Transaction voteproducer(String pk,String voter,String proxy,List<String> producers) throws Exception {
+		// get chain info
+		ChainInfo info = getChainInfo();
+		// get block info
+		Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
+		// tx
+		Tx tx = new Tx();
+		tx.setExpiration(info.getHeadBlockTime().getTime() / 1000 + 60);
+		tx.setRef_block_num(info.getLastIrreversibleBlockNum());
+		tx.setRef_block_prefix(block.getRefBlockPrefix());
+		tx.setNet_usage_words(0l);
+		tx.setMax_cpu_usage_ms(0l);
+		tx.setDelay_sec(0l);
+		// actions
+		List<TxAction> actions = new ArrayList<>();
+		// data
+		Map<String, Object> dataMap = new LinkedHashMap<>();
+		dataMap.put("voter", voter);
+		dataMap.put("proxy", proxy);
+		dataMap.put("producers",producers);
+		// action
+		TxAction action = new TxAction(voter, "eosio", "voteproducer", dataMap);
+		actions.add(action);
+		tx.setActions(actions);
+		// sgin
+		String sign = Ecc.signTransaction(pk, new TxSign(info.getChainId(), tx));
+		// data parse
+		String data = Ecc.parseVoteProducerData(voter, proxy, producers);
+		// reset data
+		action.setData(data);
+		// reset expiration
+		tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
+		return pushTransaction("none", tx, new String[] { sign });
+	}
 }

@@ -1,5 +1,7 @@
 package io.eblock.eos4j;
 
+import java.util.List;
+
 import io.eblock.eos4j.api.vo.transaction.push.TxSign;
 import io.eblock.eos4j.ecc.EccTool;
 import io.eblock.eos4j.ese.Ese;
@@ -75,6 +77,17 @@ public class Ecc {
 	 */
 	public static String parseTransferData(String from, String to, String quantity, String memo) {
 		return Ese.parseTransferData(from, to, quantity, memo);
+	}
+	
+	/**
+	 * 
+	 * @param voter
+	 * @param proxy
+	 * @param producers
+	 * @return
+	 */
+	public static String parseVoteProducerData(String voter, String proxy, List<String> producers) {
+		return Ese.parseVoteProducerData(voter, proxy, producers);
 	}
 
 	/**

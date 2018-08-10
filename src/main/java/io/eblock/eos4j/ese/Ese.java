@@ -1,5 +1,8 @@
 package io.eblock.eos4j.ese;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.eblock.eos4j.utils.ByteUtils;
 import io.eblock.eos4j.utils.Hex;
 
@@ -33,6 +36,35 @@ public class Ese {
 		// }
 		return Hex.bytesToHexString(allbyte);
 	}
+	
+
+	/**
+	 * parseTransferData
+	 * 
+	 * @param datas
+	 * @return
+	 */
+	public static String parseVoteProducerData(String voter, String proxy, List<String> producers) {
+		List<DataParam> datas = new ArrayList<DataParam>();
+		datas.add(new DataParam(voter, DataType.name, Action.voteproducer));
+		datas.add(new DataParam(proxy, DataType.name, Action.voteproducer));
+		datas.add(new DataParam(String.valueOf(producers.size()), DataType.varint32, Action.voteproducer));
+		for(String producer:producers) {
+			datas.add(new DataParam(producer, DataType.name, Action.voteproducer));
+		}
+		byte[] allbyte = new byte[] {};
+		for (DataParam value : datas) {
+			allbyte = ByteUtils.concat(allbyte, value.seria());
+		}
+//		 final byte [] b = allbyte.clone();
+//		 int[] a = IntStream.range(0, b.length).map(i -> b[i] & 0xff).toArray();
+//		 for(int i=1;i<=a.length;i++) {
+//		 System.out.print(a[i-1]+","+((i%8==0)?"\n":""));
+//		 }
+		return Hex.bytesToHexString(allbyte);
+	}
+	
+	
 
 	/**
 	 * parseTransferData

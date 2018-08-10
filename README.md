@@ -6,6 +6,13 @@ change writeName add writeUint64 support custom contract
 
 # use
 
+## voteproducer
+
+ ```
+ voteproducer(String pk,String voter,String proxy,List<String> producers)
+ 	
+ ```
+
 ## support offline sign
  
  ```
