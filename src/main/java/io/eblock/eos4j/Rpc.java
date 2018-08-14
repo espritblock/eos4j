@@ -3,6 +3,7 @@ package io.eblock.eos4j;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -347,6 +348,8 @@ public class Rpc {
 	 * @throws Exception
 	 */
 	public Transaction voteproducer(String pk,String voter,String proxy,List<String> producers) throws Exception {
+		Comparator<String> comparator = (h1, h2) -> h2.compareTo(h1);
+		producers.sort(comparator.reversed());
 		// get chain info
 		ChainInfo info = getChainInfo();
 		// get block info
