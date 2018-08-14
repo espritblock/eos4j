@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -16,8 +17,8 @@ import io.eblock.eos4j.api.service.RpcService;
 import io.eblock.eos4j.api.utils.Generator;
 import io.eblock.eos4j.api.vo.Block;
 import io.eblock.eos4j.api.vo.ChainInfo;
-import io.eblock.eos4j.api.vo.SignParam;
 import io.eblock.eos4j.api.vo.RamUsage;
+import io.eblock.eos4j.api.vo.SignParam;
 import io.eblock.eos4j.api.vo.account.Account;
 import io.eblock.eos4j.api.vo.account.Balance;
 import io.eblock.eos4j.api.vo.tablerows.Base;
@@ -199,6 +200,55 @@ public class Rpc {
         // reset expiration
         tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
         return pushTransaction("none", tx, new String[] {sign});
+    }
+    
+    /**
+     * 
+     * 代理投票
+     * @param pk
+     * @param voter
+     * @param proxy
+     * @param producers
+     * @return
+     * @throws Exception 
+     * @date 2018年8月14日
+     * @author patrick
+     */
+    public Transaction voteproducer(String pk,String voter,String proxy,List<String> producers) throws Exception {
+        Comparator<String> comparator = (h1, h2) -> h2.compareTo(h1);
+        producers.sort(comparator.reversed());
+        // get chain info
+        ChainInfo info = getChainInfo();
+        // get block info
+        Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
+        // tx
+        Tx tx = new Tx();
+        tx.setExpiration(info.getHeadBlockTime().getTime() / 1000 + 60);
+        tx.setRef_block_num(info.getLastIrreversibleBlockNum());
+        tx.setRef_block_prefix(block.getRefBlockPrefix());
+        tx.setNet_usage_words(0l);
+        tx.setMax_cpu_usage_ms(0l);
+        tx.setDelay_sec(0l);
+        // actions
+        List<TxAction> actions = new ArrayList<>();
+        // data
+        Map<String, Object> dataMap = new LinkedHashMap<>();
+        dataMap.put("voter", voter);
+        dataMap.put("proxy", proxy);
+        dataMap.put("producers",producers);
+        // action
+        TxAction action = new TxAction(voter, "eosio", "voteproducer", dataMap);
+        actions.add(action);
+        tx.setActions(actions);
+        // sgin
+        String sign = Ecc.signTransaction(pk, new TxSign(info.getChainId(), tx));
+        // data parse
+        String data = Ecc.parseVoteProducerData(voter, proxy, producers);
+        // reset data
+        action.setData(data);
+        // reset expiration
+        tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
+        return pushTransaction("none", tx, new String[] { sign });
     }
 
     /**

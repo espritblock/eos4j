@@ -1,5 +1,6 @@
 package io.eblock.eos4j;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +19,7 @@ import retrofit2.Call;
 
 public class RpcTest {
 
-    static Rpc rpc = new Rpc("http://192.168.1.51:8888");
+    static Rpc rpc = new Rpc("http://192.168.1.50:8888");
 
     /**
      * 
@@ -41,7 +42,7 @@ public class RpcTest {
      */
     @Test
     public void getBlock() {
-        println(rpc.getRpcService().getBlock(Collections.singletonMap("block_num_or_id", "1")));
+        println(rpc.getRpcService().getBlock(Collections.singletonMap("block_num_or_id", "1773921")));
     }
     
     /**
@@ -313,7 +314,7 @@ public class RpcTest {
      */
     @Test
     public void getCurrencyBalance() {
-        List<Balance> mBalanceList = rpc.getCurrencyBalance("maitoken", "chao", "MAI");
+        List<Balance> mBalanceList = rpc.getCurrencyBalance("maitoken", "maioperate", "MAI");
 
         if (mBalanceList != null && mBalanceList.size() > 0) {
             for (Balance mBalance : mBalanceList) {
@@ -386,6 +387,25 @@ public class RpcTest {
             System.out.println(ex.getError().getCode());
         }
         catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * 
+     * 代理投票
+     * @date 2018年8月14日
+     * @author patrick
+     */
+    @Test
+    public void voteproducer() {
+        try {
+            List<String> produces = new ArrayList<>();
+            produces.add("pppppeeeeooo");
+            produces.add("mdddssssddds");
+            produces.add("mdjddjddddds");
+            rpc.voteproducer("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "epskdkdsddss","iuewjdkslsdc",produces);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

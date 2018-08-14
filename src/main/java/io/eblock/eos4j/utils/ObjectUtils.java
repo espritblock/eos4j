@@ -2,11 +2,12 @@ package io.eblock.eos4j.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import io.eblock.eos4j.api.vo.transaction.push.TxAction;
 import io.eblock.eos4j.api.vo.BaseVo;
+import io.eblock.eos4j.api.vo.transaction.push.TxAction;
 
 public class ObjectUtils {
 
@@ -160,18 +161,24 @@ public class ObjectUtils {
                     bf.concat(ByteUtils.writerAsset(obj.toString()));
                 } else if ("transfer".equals(key)) {
                     bf.concat(ByteUtils.writerUnit8(obj.toString()));
+                } else if ("voter".equals(key)) {
+                    bf.concat(ByteUtils.writeName(obj.toString()));
+                } else if ("proxy".equals(key)) {
+                    bf.concat(ByteUtils.writeName(obj.toString()));
+                } else if ("producer".equals(key)) {
+                    bf.concat(ByteUtils.writeName(obj.toString()));
                 }
             }
         }
         for (String key : objMap.keySet()) {
             Object obj = params.get(key);
             if ("context_free_actions".equals(key)) {
-                bf.concat(ByteUtils.writerVarint32(String.valueOf(((List) obj).size())));
+                bf.concat(ByteUtils.writerVarint32(String.valueOf(((List)obj).size())));
                 for (Object ob : (List)obj) {
                     writeBytes(ob, bf);
                 }
             } else if ("actions".equals(key)) {
-                bf.concat(ByteUtils.writerVarint32(String.valueOf(((List) obj).size())));
+                bf.concat(ByteUtils.writerVarint32(String.valueOf(((List)obj).size())));
                 for (Object ob : (List)obj) {
                     if (ob instanceof TxAction) {
                         TxAction refundAction = (TxAction)ob;
@@ -181,6 +188,13 @@ public class ObjectUtils {
                             writeBytes(ob, bf);
                         }
                     }
+                }
+            } else if ("producers".equals(key)) {
+                bf.concat(ByteUtils.writerVarint32(String.valueOf(((List)obj).size())));
+                for (Object ob : (List)obj) {
+                    Map<String, Object> mp = new HashMap<>();
+                    mp.put("producer", ob);
+                    writeBytes(mp, bf);
                 }
             } else {
                 writeBytes(obj, bf);
