@@ -17,9 +17,7 @@ public class DataParam {
 		if (type == DataType.asset) {
 			if (action == action.transfer || action == action.delegate) {
 				String vs[] = value.split(" ");
-				if (vs.length < 2) {
-					throw new EException("error", "quantity error");
-				}
+				if (vs.length < 2) {throw new EException("error", "quantity error");}
 				String ammount = vs[0];
 				String ams [] = ammount.split("[.]");
 				int precision = 0;
