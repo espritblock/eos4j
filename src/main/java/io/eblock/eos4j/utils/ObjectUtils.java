@@ -60,7 +60,7 @@ public class ObjectUtils {
 				} else if ("data".equals(key)) {
 					ByteBuffer databf = new ByteBuffer();
 					writeBytes(obj, databf);
-					bf.concat(new byte[] { (byte) databf.getBuffer().length });
+					bf.concat(ByteUtils.writerVarint32(String.valueOf(databf.getBuffer().length)));
 					bf.concat(databf.getBuffer());
 				} else if ("transaction_extensions".equals(key)) {
 

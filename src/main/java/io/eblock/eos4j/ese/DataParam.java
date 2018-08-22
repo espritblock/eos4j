@@ -20,7 +20,11 @@ public class DataParam {
 				if (vs.length < 2) {
 					throw new EException("error", "quantity error");
 				}
-				this.value = vs[0] + " " + action.getCode().replace("${quantity}", vs[1]);
+				String ammount = vs[0];
+				String ams [] = ammount.split("[.]");
+				int precision = 0;
+				if(ams.length>1) {precision = ams[1].length();}
+				this.value = vs[0] + " " + action.getCode().replace("${precision}",String.valueOf(precision)).replace("${quantity}", vs[1]);
 			} else {
 				this.value = value;
 			}
