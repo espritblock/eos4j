@@ -208,6 +208,53 @@ public class ByteUtils {
 		ByteBuffer ba = ByteBuffer.wrap(asset.getBytes());
 		return ByteUtils.concat(ammount.array(), ba.array());
 	}
+	
+	/**
+	 * writerAsset
+	 * 
+	 * @param v
+	 * @return
+	 */
+	public static byte[] writerSymbol(String v) {
+		String _value[] = v.split(" ");
+		String amount = _value[0];
+		if(amount==null || !amount.matches("^[0-9]+(.[0-9]+)?$")){
+			throw new EException("amount_error", "amount error");
+		}
+		String sym = _value[1];
+		String precision = sym.split(",")[0];
+		String symbol = sym.split(",")[1].split("@")[0];
+		String[] part = amount.split("[.]");
+
+		int pad = Integer.parseInt(precision);
+		StringBuffer bf = new StringBuffer(part[0] + ".");
+		if (part.length > 1) {
+			if(part[1].length()>pad) {
+				throw new EException("precision_error", "precision max "+pad);
+			}
+			pad = Integer.parseInt(precision) - part[1].length();
+			bf.append(part[1]);
+		}
+		// ���Ȳ�0
+		for (int i = 0; i < pad; i++) {
+			bf.append("0");
+		}
+		String asset = precision + "," + symbol;
+		// amount
+//		amount = bf.toString().replace(".", "");
+//		ByteBuffer ammount = ByteBuffer.allocate(Long.BYTES).order(ByteOrder.LITTLE_ENDIAN)
+//				.putLong(Long.parseLong(amount));
+
+		// asset
+		StringBuffer padStr = new StringBuffer();
+		for (int i = 0; i < (7 - symbol.length()); i++) {
+			padStr.append("\0");
+		}
+		char c = (char) Integer.parseInt(precision);
+		asset = c + symbol + padStr;
+		ByteBuffer ba = ByteBuffer.wrap(asset.getBytes());
+		return ba.array();
+	}
 
 	/**
 	 * writerAccount

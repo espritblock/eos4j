@@ -141,4 +141,14 @@ public class Ecc {
 			int transfer) {
 		return Ese.parseDelegateData(from, receiver, stakeNetQuantity, stakeCpuQuantity, transfer);
 	}
+	
+	/**
+	 * 关闭token
+	 * @param owner
+	 * @param symble
+	 * @return
+	 */
+	public static String parseCloseData(String owner, String symbol) {
+		return Ese.parseCloseData(owner, symbol);
+	}
 }

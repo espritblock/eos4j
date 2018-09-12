@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import io.eblock.eos4j.api.exception.ApiException;
 import io.eblock.eos4j.api.vo.transaction.Transaction;
 
 public class Test {
@@ -45,11 +46,9 @@ public class Test {
 		
 		System.out.println("\n******************* Ecc End *******************\n\n\n");
 		
-		
 		System.out.println("******************* Rpc Start *******************\n");
 		
-		
-		Rpc rpc = new Rpc("http://112.74.202.161:8888");
+		Rpc rpc = new Rpc("http://47.106.221.171:8888");
 		
 		System.out.println("============= 转账 ===============");
 		try {
@@ -84,7 +83,15 @@ public class Test {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
+		System.out.println("============= 关闭余额为0的token ===============");
+		try {
+			rpc.close("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3", "合约账户", "关闭账户", "0.0000 IPOS");
+		}catch(ApiException e) {
+			e.printStackTrace();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
 		System.out.println("\n******************* Rpc End *******************");
 	}
 }

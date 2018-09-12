@@ -134,4 +134,22 @@ public class Ese {
 		}
 		return Hex.bytesToHexString(allbyte);
 	}
+	
+	/**
+	 * parseCloseData
+	 * 
+	 * @param datas
+	 * @return
+	 */
+	public static String parseCloseData(String owner, String symbol) {
+		DataParam[] datas = new DataParam[] { 
+			new DataParam(owner, DataType.name, Action.close),
+			new DataParam(symbol, DataType.symbol, Action.close)
+		};
+		byte[] allbyte = new byte[] {};
+		for (DataParam value : datas) {
+			allbyte = ByteUtils.concat(allbyte, value.seria());
+		}
+		return Hex.bytesToHexString(allbyte);
+	}
 }

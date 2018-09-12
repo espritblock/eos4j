@@ -122,6 +122,10 @@ public class ObjectUtils {
 					bf.concat(ByteUtils.writeName(obj.toString()));
 				}else if ("producer".equals(key)) {
 					bf.concat(ByteUtils.writeName(obj.toString()));
+				}else if ("close-owner".equals(key)) {
+					bf.concat(ByteUtils.writeName(obj.toString()));
+				}else if ("close-symbol".equals(key)) {
+					bf.concat(ByteUtils.writerSymbol(obj.toString()));
 				}
 			}
 		}

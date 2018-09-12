@@ -387,4 +387,42 @@ public class Rpc {
 		tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
 		return pushTransaction("none", tx, new String[] { sign });
 	}
+	
+	/**
+	 * token close
+	 * @param owner
+	 * @param symbol
+	 * @return
+	 * @throws Exception
+	 */
+	public Transaction close(String pk,String contract,String owner, String symbol)throws Exception {
+		ChainInfo info = getChainInfo();			
+		Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
+		Tx tx = new Tx();
+		tx.setExpiration(info.getHeadBlockTime().getTime() / 1000 + 60);
+		tx.setRef_block_num(info.getLastIrreversibleBlockNum());
+		tx.setRef_block_prefix(block.getRefBlockPrefix());
+		tx.setNet_usage_words(0l);
+		tx.setMax_cpu_usage_ms(0l);
+		tx.setDelay_sec(0l);
+		// actions
+		List<TxAction> actions = new ArrayList<>();
+		// data
+		Map<String, Object> dataMap = new LinkedHashMap<>();
+		dataMap.put("close-owner", owner);
+		dataMap.put("close-symbol",  new DataParam(symbol, DataType.symbol, Action.close).getValue());
+		// action
+		TxAction action = new TxAction(owner,contract,"close",dataMap);
+		actions.add(action);
+		tx.setActions(actions);
+		// sgin
+		String sign = Ecc.signTransaction(pk, new TxSign(info.getChainId(), tx));
+		// data parse
+		String data = Ecc.parseCloseData(owner, symbol);
+		// reset data
+		action.setData(data);
+		// reset expiration
+		tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
+		return pushTransaction("none", tx, new String[] { sign });
+	}
 }

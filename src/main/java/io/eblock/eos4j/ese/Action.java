@@ -8,7 +8,8 @@ package io.eblock.eos4j.ese;
  */
 public enum Action {
 
-	transfer("${precision},${quantity}@eosio.token"), account("account"), ram("ram"), delegate("${precision},${quantity}@eosio.token"), voteproducer("voteproducer");
+	transfer("${precision},${quantity}@eosio.token"), account("account"), ram("ram"), delegate("${precision},${quantity}@eosio.token"), voteproducer("voteproducer"),
+	close("${precision},${quantity}@eosio.token");
 
 	private String code;
 
