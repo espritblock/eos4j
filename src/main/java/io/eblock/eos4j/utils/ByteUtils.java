@@ -396,5 +396,32 @@ public class ByteUtils {
 	public static byte[] writeUint64(String v) {
 		return ByteBuffer.allocate(Long.BYTES).order(ByteOrder.LITTLE_ENDIAN).putLong(Long.parseLong(v)).array();
 	}
-
+	
+	/**
+	 * writerchecksum256
+	 * @param v
+	 * @return
+	 */
+	public static byte[] checksum256(String v) {
+		if ((v.length() % 2) != 0) {
+			v = v.substring(0,v.length()-1);
+		}
+		int k = v.length();
+		if(k<64){
+			for(int i=0;i<(64-k);i++){
+				v += "0";
+			}
+		}
+		if(k>64){
+			v = v.substring(0,64);
+		}
+		byte[] aa = new byte[] {};
+    		int l = v.length() / 2;
+		for (int i = 0; i < l; i++) {
+			int x = Integer.parseInt(v.substring(i*2,i*2+2),16);
+			aa = ByteUtils.concat(aa, new byte[] { (byte) x });
+		}
+		return aa;
+	}
+	
 }
