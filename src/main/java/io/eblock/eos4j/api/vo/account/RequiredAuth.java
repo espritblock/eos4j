@@ -1,6 +1,7 @@
 package io.eblock.eos4j.api.vo.account;
 
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -12,17 +13,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RequiredAuth {
 
-	private List<String> accounts;
+	private List<Map> accounts;
 
 	private List<Key> keys;
 
 	private Long threshold;
 
-	public List<String> getAccounts() {
+	public List<Map> getAccounts() {
 		return accounts;
 	}
 
-	public void setAccounts(List<String> accounts) {
+	public void setAccounts(List<Map> accounts) {
 		this.accounts = accounts;
 	}
 
